@@ -9,7 +9,6 @@
 project = 'Caniot Tool'
 copyright = '2022, caniot team'
 author = 'caniot team'
-version = '2.0'
 release = '1.0.1'
 
 # -- General configuration ---------------------------------------------------
