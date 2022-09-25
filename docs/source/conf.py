@@ -26,10 +26,3 @@ exclude_patterns = []
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-html_favicon = './images/favicon.png'
-html_title = 'Caniot Tool'
-html_logo = './images/twitter_header_photo_2.png'
-html_theme_options = {
-    'logo_only': False,
-    'display_version': True,
-}
