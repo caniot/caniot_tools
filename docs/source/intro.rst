@@ -70,3 +70,17 @@ Caniot tool is a Multi-platform simulation, analysis and test environment for de
             8      CAN 0 H
             9      LIN Data   
             =====  ========================  
+
+            
+This is a typical paragraph.  An indented literal block follows.
+
+::
+
+    for a in [5,4,3,2,1]:   # this is program code, shown as-is
+        print a
+    print "it's..."
+    # a literal block continues until the indentation ends
+
+This text has returned to the indentation of the first paragraph,
+is outside of the literal block, and is therefore treated as an
+ordinary paragraph.
