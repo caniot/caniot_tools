@@ -14,8 +14,12 @@ release = '1.0.1'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
-
+extensions = [
+    "sphinx_rtd_theme",
+    'sphinx.ext.autosectionlabel',
+    'sphinx_tabs.tabs',
+    'sphinxcontrib.video',
+]
 templates_path = ['_templates']
 exclude_patterns = []
 
@@ -25,7 +29,7 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+# html_static_path = ['_static']
 html_favicon = './images/favicon.png'
 html_title = 'Caniot Tool'
 html_logo = './images/twitter_header_photo_2.png'
