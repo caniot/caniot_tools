@@ -3,7 +3,7 @@
 CaniotBox Hardware
 ====================================
 
-The CaniotBox is a small, inexpensive ESP32 based USB/Wifi to CAN/LIN/K-LINE adapter. The CaniotBox logs in as a virtual serial port on your computer and acts as an interface between serial line and CAN bus. With the Caniot Application, the CaniotBox can be operated as a native CAN interface under Windows/Linux and macOS. it supports both standard CAN and CAN-FD.
+The CaniotBox is a small, inexpensive ESP32 based USB/Wifi to CAN/LIN/K-LINE adapter. The CaniotBox logs in as a virtual serial port on your computer and acts as an interface between serial line and your bus. With the Caniot Application, the CaniotBox can be operated as a native Bus interface under Windows/Linux and macOS. it supports both standard CAN and CAN-FD for the CAN protocol.
 
 Specifications
 ---------------

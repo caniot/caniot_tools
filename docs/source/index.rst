@@ -38,9 +38,12 @@ Caniot tool is a Multi-platform simulation, analysis and test environment for de
     * DBC/LDF decode data to physical values and plot
     * Support ISO-TP 15765-2 and UDS ISO 14229.
     * CaniotBox has simple logger which writes everything from CAN/LIN bus to csv file on a SD card (8-32GB).
+    * CaniotBox can be used on standalone mode to simulate your bus without the need  to use the Caniot Appl with your computer.
     * stream real-time data via USB or TCP Connection to your PC.
     * stream real-time data to your own MQTT Server.
+    * It supports CAN 2.0A and 2.0B  and CANFD protocol.
     * Caniot application updates.
+    * The last saved user preferences are loaded automatically at the start of application.
 
 .. important:: Caniot tool is an enginnering sample and is not fully tested.This part should only be used for functional evaluation and proof of concept, not for production or end of use.
 
