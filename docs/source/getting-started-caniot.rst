@@ -45,6 +45,9 @@ Setup
    
        *enter Work directory* 
 
+|
+|
+|
 
 .. _usb howTo:
 
@@ -54,15 +57,15 @@ USB Connection
 .. note::
 
     **Linux and Mac**
-
     Drivers are not required on Linux and Mac. The CaniotBox will appear as a USB CDC device: /dev/ttyACMX or /dev/ttyUSBX on Linux or /dev/cu.usbmodemXXXX on on Mac.
-
     **Windows**
-
     Modern versions of Windows do not require a driver for USB-CDC devices, and the CaniotBox will enumerate properly after plugging in.    
    
    
 If one or more CaniotBoxes are connected to your computer, a pop-up window will appear listing their virtual serial ports, please select one and click **start** button.
+
+|
+|
 
 .. only:: html
     
@@ -82,6 +85,9 @@ If one or more CaniotBoxes are connected to your computer, a pop-up window will 
 
 
 
+|
+|
+|
 
 Wifi Connection
 ----------------
@@ -96,11 +102,13 @@ If you want to use the caniot tool without messing with cables. Then, a Wi-Fi co
 * a pop-up window will appear, select connection wifi mode and **Click** ``ok``  .
 * wait until caniot appl and CaniotBox is restarted again ``connect to caniotBox`` window will appear.
 * the CaniotBox will start as wifi AP with a network name **CANIOTBOX**.
-* for windows 10 please refer to `windows Wifi`_ to see how to connect th a wifi network.
-* select **CANIOTBOX** netwrok and type **CaniotBox2020** for the netweok password.
+* for windows 10 please refer to `windows Wifi`_ to see how to connect to a wifi network.
+* select **CANIOTBOX** network and type **CaniotBox2020** for the password.
 * when the connection between your computer and the CaniotBox is established, ``Device 1 is connected`` is shown on CaniotBox Main Screen.
 * Type the IP address of your CaniotBox on ``connect to caniotBox`` window and Click **ok** .
 
+|
+|
 
 .. only:: html
     
@@ -118,7 +126,6 @@ If you want to use the caniot tool without messing with cables. Then, a Wi-Fi co
 
       *select connection mode from menubar*
 
-
    .. figure:: /images/wifi_start0.png
       :align: center
       :height: 500
@@ -132,31 +139,33 @@ If you want to use the caniot tool without messing with cables. Then, a Wi-Fi co
       :width: 900   
 
       *type you caniotBox adress and press ok button to connect*
+
+|
+|
+|
 
 1.2 Station client mode:
 
+the caniotBox can connect to your own Wifi network as client instead of Access Point(AP)
 
-* firstly you need to connect to caniotBox as described here :ref:`usb howTo`.
-* choose from ``menubar``   |menubarIcon|   the **connection mode**.
-* a pop-up window will appear, select connection wifi mode and **Click** ``ok``  .
-* wait until caniot appl and CaniotBox is restarted again ``connect to caniotBox`` window will appear.
-* the CaniotBox will start as wifi AP with a network name **CANIOTBOX**.
-* for windows 10 please refer to `windows Wifi`_ to see how to connect th a wifi network.
-* select **CANIOTBOX** netwrok and type **CaniotBox2020** for the netweok password.
-* when the connection between your computer and the CaniotBox is established, ``Device 1 is connected`` is shown on CaniotBox Main Screen.
-* Type the IP address of your CaniotBox on ``connect to caniotBox`` window and Click **ok** .
+* firstly you need to connect to caniotBox on ``USB mode`` or ``Wifi AP mode`` .
+* choose from ``menubar`` the **Wifi configuration**.
+* a pop-up window will appear, enter your network name(SSID) and your network password.
+* select from ``Wifi mode`` **Station client** and click  **ok** and wait until CaniotBox is restarted again.
+* when the connection between your network and the CaniotBox is established,the new ``IP:`` is shown on CaniotBox Main Screen.
+* Type the new IP address of your CaniotBox on ``connect to caniotBox`` window and Click **ok** .
 
 
 .. only:: html
     
-   .. video:: _static/wifi_start.mp4
+   .. video:: _static/wifiClient.mp4
       :width: 675
       :height: 400
 
 
 .. only:: latex
 
-   .. figure:: /images/wifi_start2.png
+   .. figure:: /images/wifi_client0.png
       :align: center
       :height: 500
       :width: 900 
@@ -164,19 +173,16 @@ If you want to use the caniot tool without messing with cables. Then, a Wi-Fi co
       *select connection mode from menubar*
 
 
-   .. figure:: /images/wifi_start0.png
+   .. figure:: /images/wifi_client1.png
       :align: center
       :height: 500
       :width: 900     
 
       *select connection wifi mode*   
 
-   .. figure:: /images/wifi_start.png
-      :align: center
-      :height: 500
-      :width: 900   
-
-      *type you caniotBox adress and press ok button to connect*
+|
+|
+|
 
 .. _windows Wifi: https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263
 

@@ -37,12 +37,12 @@ Specifications
             Size                77x42mm  
             ================    ========================================== 
 
-        1.2.1	HW V2.1
+        1.1.2	HW V3.0
 
             ================    ==========================================
-            Controller          ESP32 wrover S1             
+            Controller          ESP32 wroom S3
             Flash               8MB              
-            PSRAM               4MB
+            PSRAM               8MB
             CAN0 Channel        up to 1 Mbit/s
             CAN1 FD Channel     up to 5 Mbit/s Data Rate
             LIN Channel         up to 20 Kbit/s.
@@ -50,7 +50,7 @@ Specifications
             Wifi Antenna        max gain of 2dBi.
             Display             2.4 Inch 320x240 TFT, SPI
             Power0              5V USB,Min 3.55V@300mA
-            Power1              external 12V+ on dsub9 Pin1
+            Power1              external 12V+ on dsub9 Pin1(max 40V input)
             Switch              Switch between Power0 and Power1
             Button              Reset button
             Size                77x42mm  
@@ -81,7 +81,7 @@ Specifications
             =====  ========================
 
 
-        1.2.2	D-SUB9 Pin Assignment HW V2.1
+        1.2.2	D-SUB9 Pin Assignment HW V3.0
 
 
             =====  ======================== 
