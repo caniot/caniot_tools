@@ -1,0 +1,117 @@
+/*---------GLOBAL DEFINITIONS-----------*/
+LIN_description_file;
+LIN_protocol_version             = "2.1";
+LIN_language_version             = "2.1";
+LIN_speed                        = 19.2 kbps;
+/* ----------NODE DEFINITIONS---------- */
+Nodes {
+   Master:
+      MasterNode,                                            /* Master node name */
+      5.0 ms,                                                /* Time base */
+      0.1 ms;                                                /* Jitter */
+   Slaves:
+      Gateway;
+}
+/* ----------SIGNAL DEFINITIONS---------- */
+Signals {
+   /* Signal_name                : Size,       Init,            Publisher, Subscriber(s) */
+   Potentiometer1        :  8,        0x0,              Gateway, MasterNode;
+   LightSensor1          :  8,        0x0,              Gateway, MasterNode;
+   Potentiometer2        :  8,        0x0,              Gateway, MasterNode;
+   PotentiometerA        :  8,        0x0,              Gateway, MasterNode;
+   LightSensorA          :  8,        0x0,              Gateway, MasterNode;
+   PotentiometerB        :  8,        0x0,              Gateway, MasterNode;
+   PotentiometerC        :  8,        0x0,              Gateway, MasterNode;
+   GatewayError                  :  1,        0x0,              Gateway, MasterNode;
+   Identifier             :  2,        0x1,           MasterNode, Gateway;
+}
+/* ----------DIAGNOSTIC SIGNAL DEFINITIONS---------- */
+Diagnostic_signals {
+   /* MasterReq Reserved Signals */
+   MasterReqB0         :    8,   0;
+   MasterReqB1         :    8,   0;
+   MasterReqB2         :    8,   0;
+   MasterReqB3         :    8,   0;
+   MasterReqB4         :    8,   0;
+   MasterReqB5         :    8,   0;
+   MasterReqB6         :    8,   0;
+   MasterReqB7         :    8,   0;
+   /* SlaveResp Reserved Signals */
+   SlaveRespB0         :    8,   0;
+   SlaveRespB1         :    8,   0;
+   SlaveRespB2         :    8,   0;
+   SlaveRespB3         :    8,   0;
+   SlaveRespB4         :    8,   0;
+   SlaveRespB5         :    8,   0;
+   SlaveRespB6         :    8,   0;
+   SlaveRespB7         :    8,   0;
+}
+/* ----------UNCONDITIONAL FRAME DEFINITIONS---------- */
+Frames {
+   GatewayControl      :  0x1, MasterNode          ,    1 {
+      Identifier   , 0;
+   }
+   PotentiometerInfo   :  0x2, Gateway             ,    5 {
+      Potentiometer1, 0;
+      Potentiometer2, 8;
+      PotentiometerA, 16;
+      PotentiometerB, 24;
+      PotentiometerC, 32;
+   }
+   LightSensorInfo     :  0x3, Gateway             ,    3 {
+      LightSensor1, 0;
+      LightSensorA, 8;
+      GatewayError        , 16;
+   }
+}
+/* ----------DIAGNOSTIC FRAME DEFINITIONS---------- */
+Diagnostic_frames {
+   MasterReq           : 0x3c {
+      MasterReqB0         , 0;
+      MasterReqB1         , 8;
+      MasterReqB2         , 16;
+      MasterReqB3         , 24;
+      MasterReqB4         , 32;
+      MasterReqB5         , 40;
+      MasterReqB6         , 48;
+      MasterReqB7         , 56;
+   }
+   SlaveResp           : 0x3d {
+      SlaveRespB0         , 0;
+      SlaveRespB1         , 8;
+      SlaveRespB2         , 16;
+      SlaveRespB3         , 24;
+      SlaveRespB4         , 32;
+      SlaveRespB5         , 40;
+      SlaveRespB6         , 48;
+      SlaveRespB7         , 56;
+   }
+}
+/* ----------NODE ATTRIBUTE DEFINITIONS---------- */
+Node_attributes {
+   Gateway {
+      LIN_protocol               = "2.1";                    /* Node protocol version */
+      configured_NAD             = 0x1;                      /* configured NAD of node (1-125) */
+      initial_NAD                = 0xa;                      /* initial NAD of node (1-125) */
+      product_id                 =   0x1e,    0x1,    0x0;   /* Product id */
+      response_error             = GatewayError;             /* Response error signal */
+      P2_min                     = 100 ms;                   /* P2_min */
+      ST_min                     = 20 ms;                    /* ST_min */
+      N_As_timeout               = 1000 ms;                  /* N_As timeout value */
+      N_Cr_timeout               = 1000 ms;                  /* N_Cr timeout value */
+      configurable_frames {
+         GatewayControl;
+         PotentiometerInfo;
+         LightSensorInfo;
+      }
+   }
+}
+/* ----------SCHEDULE TABLE DEFINITIONS---------- */
+Schedule_tables {
+   NormalTable {
+      GatewayControl                      delay 50.0 ms;
+      PotentiometerInfo                   delay 50.0 ms;
+      LightSensorInfo                     delay 50.0 ms;
+   }
+}
+
