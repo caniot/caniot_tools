@@ -37,7 +37,7 @@ static void Lin_appl_diagnose_Task(void *clientSock)
   appl_message_t diagnose_event;
   diagnose_event.bufferPtr = &myBuffer;
   diagnose_event.event = 2;
-
+int32_t handle;
   while (1)
   {
     if (xQueueReceive(appl_diagnose_queue, &appl_message, portMAX_DELAY))
@@ -49,27 +49,30 @@ static void Lin_appl_diagnose_Task(void *clientSock)
       {
         if (appl_message.bufferPtr[0] == 1)
         {
-          LinIf_TpTransmitSync(APPL_NAD, sizeof(writeData), writeData);
+          LinIf_TpTransmitSync(&handle,APPL_NAD, sizeof(writeData), writeData);
+          if (handle != -1)
+          {
+            diagnose_event.bufferPtr[0] = 1;
+            xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
+            return;
+          }
           do
           {
             LinIf_Tp_tx_status(&message_status);
             vTaskDelay(5);
           } while (EN_IN_PROGRESS == message_status);
-          LinIf_TpReceiveSync(&NAD, &length, UDS_diag_data, portMAX_DELAY);
+          LinIf_TpReceiveSync(handle,&NAD, &length, UDS_diag_data, portMAX_DELAY);
 
           if (length > 0)
           {
-            if (memcmp("no Data", UDS_diag_data, 7) == 0) /* no answer from last UDS request*/
-            {
 
-              diagnose_event.bufferPtr[0] = 1;
-              xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
-            }
-            else
-            {
-              diagnose_event.bufferPtr[0] = 0;
-              xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
-            }
+            diagnose_event.bufferPtr[0] = 0;
+            xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
+          }
+          else
+          {
+            diagnose_event.bufferPtr[0] = 1;
+            xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
           }
         }
         else
@@ -77,15 +80,20 @@ static void Lin_appl_diagnose_Task(void *clientSock)
 
           LinIf_Tp_set_rx_ready();
 
-          LinIf_TpTransmitSync(APPL_NAD, sizeof(readData), readData);
-
+          LinIf_TpTransmitSync(&handle,APPL_NAD, sizeof(readData), readData);
+          if (handle != -1)
+          {
+            diagnose_event.bufferPtr[0] = 1;
+            xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
+            return;
+          }
           do
           {
             LinIf_Tp_tx_status(&message_status);
             vTaskDelay(5);
           } while (EN_IN_PROGRESS == message_status);
 
-          LinIf_TpReceiveSync(&NAD, &length, UDS_diag_data, portMAX_DELAY);
+          LinIf_TpReceiveSync(handle,&NAD, &length, UDS_diag_data, portMAX_DELAY);
 
           if (length > 0)
           {

@@ -178,7 +178,7 @@
           "31",
           "F0"
         ],
-        "fileName": "/sdcard/flash_tools/flash_driver.bin",
+        "filePath": "/sdcard/flash_tools/flash_driver.bin",
         "compressionMethod": "0",
         "encryptingMethod": "0",
         "Response_Data": [
@@ -265,7 +265,7 @@
           "F2",
           "00"
         ],
-        "fileName": "/sdcard/flash_tools/S32K116_LIN_APP_Demo.bin",
+        "filePath": "/sdcard/flash_tools/S32K116_LIN_APP_Demo.bin",
         "compressionMethod": "0",
         "encryptingMethod": "0",
         "Response_Data": [

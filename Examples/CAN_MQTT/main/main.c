@@ -46,16 +46,16 @@ void app_main(void)
   esp_err_t uart_err = serialOutput_configure(115200);
 
   /*Beginn of application code*/
-  uint8_t can_lin_variant = appl_get_can_lin_var();
+  uint8_t can_lin_variant;
+  nvsIf_get_can_lin_var(&can_lin_variant);
   serialOutput_sendString("%sstart of application %d", COLOR_GREEN, can_lin_variant);
 
   if (can_lin_variant == 0)
   {
-     canAppl_init();
+    canAppl_init();
   }
   else if (can_lin_variant == 1)
   {
-   
   }
   else
   {

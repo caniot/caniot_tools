@@ -1,2 +1,5 @@
+build_s1/
+build_s3/
 build/
 sdkconfig.old
+sdkconfig

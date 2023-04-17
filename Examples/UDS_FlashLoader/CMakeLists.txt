@@ -2,7 +2,6 @@
 # in this exact order for cmake to work correctly
 cmake_minimum_required(VERSION 3.5)
 set(PROJECT_VER  "01.00")
-set(IDF_TARGET  "esp32")  #["esp32" or "esp32s3"]
 set(compile_options "-DCONFIG_TINYUSB_TASK_STACK_SIZE=4096" "-DCONFIG_TINYUSB_TASK_PRIORITY=5")
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(UDS_FlashLoader)

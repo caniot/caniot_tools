@@ -52,14 +52,18 @@ extern esp_err_t serialOutput_configure(int baudRate);
 * @return    esp_err_t
 *****************************************************************************/
 extern esp_err_t serialOutput_sendString(const char *fmt, ...);
-/* define for using with serialOutput_sendString*/
-#define END_BRACKET		"\x1b[32;1m]\x1b[0m"
-#define START_BRACKET	"\x1b[32;1m[\x1b[0m"
-#define COLOR_GREEN		"\x1b[32m"
-#define COLOR_RED		  "\x1b[31m"
-#define COLOR_YELLOW	"\x1b[33m"
-#define COLOR_CYAN		"\x1b[36m"
-#define HOME_SCREEN		"\x1b[H"
+/***************************************************************************
+* @name      serialOutput_send_buffer_hex
+* @brief     Prints data to the serial port as human-readable ASCII text.
+*
+* @attention 1. This API should be called after caniotBox_init and serialOutput_configure
+* @param     tag : tag to be printed fo this hex buffer
+*            bufferOutput : buffer pointer contents the data
+*            length: data length to be send
+*
+* @return    esp_err_t
+*****************************************************************************/
+extern esp_err_t serialOutput_send_buffer_hex(const char *tag,const char *color, const void *bufferOutput, uint16_t length);
 /***************************************************************************
 * @name      serialOutput_sendRaw
 * @brief     Prints given data to the serial port with a fixed length.
@@ -71,6 +75,14 @@ extern esp_err_t serialOutput_sendString(const char *fmt, ...);
 * @return    esp_err_t
 *****************************************************************************/
 extern esp_err_t serialOutput_sendRaw(char * bufferOutput, int length);
+/* define for using with serialOutput_sendString*/
+#define END_BRACKET		"\x1b[32;1m]\x1b[0m"
+#define START_BRACKET	"\x1b[32;1m[\x1b[0m"
+#define COLOR_GREEN		"\x1b[32m"
+#define COLOR_RED		  "\x1b[31m"
+#define COLOR_YELLOW	"\x1b[33m"
+#define COLOR_CYAN		"\x1b[36m"
+#define HOME_SCREEN		"\x1b[H"
 /***************************************************************************
 * @name      Kline_uart_init
 * @brief     Install UART Kline driver and set the UART to the given configuration. .
@@ -124,24 +136,32 @@ extern uint8_t *prepare_caniot_data(caniot_message_t *message_arg, uint8_t *cani
 extern bool appl_read_file_sync(appl_message_t *appl_messagefile, char *fileName,const char*  openType);
 /*************************************************************************
 * @brief     get the connection  operating mode.
-* @name      appl_get_connection_var 
+* @name      nvsIf_get_connection_var 
 * @param     void
 *
 * @return
 *    - 0: USB mode
 *    - 1: Wifi mode
 ***************************************************************************/
-extern int appl_get_connection_var(void);
+extern void nvsIf_get_connection_var(uint8_t *nvs_connection_var);
 /*************************************************************************
 * @brief     get the simulation bus operating mode.
-* @name      appl_get_can_lin_var 
+* @name      nvsIf_get_can_lin_var 
 * @param     void
 *
 * @return
 *    - 0: CAN bus mode
 *    - 1: LIN bus mode
 ***************************************************************************/
-extern int appl_get_can_lin_var(void);
+extern void nvsIf_get_can_lin_var(uint8_t *nvs_can_lin_var);
+/*************************************************************************
+* @brief     load new simulation config json file from  sdcard and restart 
+* @name      nvsIf_loadConfig 
+* @param     jsonConfigPath : pointer to the json file path
+*
+* @return    void
+***************************************************************************/
+extern void nvsIf_loadConfig(const char *jsonConfigPath);
 /*************************************************************************
 * @brief     set the caniotBox operating mode.
 * @name      caniotBox_set_mode 

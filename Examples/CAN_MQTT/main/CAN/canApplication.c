@@ -159,7 +159,7 @@ void canAppl_init(void)
     /*attach handler to be called on receiving message 0x502 on channel 1*/
     CanIf_attach_receive(1, 0x502U, &canMessageReceive_502);
 
-    int connection = appl_get_connection_var();
+    int connection = nvsIf_get_connection_var();
     if (connection == 1) /*only wifi mode*/
     {
         mqtt_app_start();

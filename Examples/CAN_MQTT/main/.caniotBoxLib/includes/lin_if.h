@@ -100,7 +100,7 @@ extern void LinIf_set_scheduler_sync(uint8_t scheduler, uint8_t entry);
 *
 * @return    void
 *****************************************************************************/
-extern void LinIf_TpReceiveSync(uint8_t *NAD, uint16_t *length, uint8_t *data, uint32_t ms_receiveTimeOut);
+extern void LinIf_TpReceiveSync(int32_t handle,uint8_t *NAD, uint16_t *length, uint8_t *data, uint32_t ms_receiveTimeOut);
 /***************************************************************************
 * @name      CanIf_attach_receive
 * @brief     send diagnostic data with the given data length for the given NAD slave over Iso tp protocol.
@@ -111,7 +111,7 @@ extern void LinIf_TpReceiveSync(uint8_t *NAD, uint16_t *length, uint8_t *data, u
 *            data : pointer to the diagnostic data       
 * @return    void
 *****************************************************************************/
-extern void LinIf_TpTransmitSync(uint8_t NAD, uint16_t data_length, uint8_t *const data);
+extern void LinIf_TpTransmitSync(int32_t *handle,uint8_t NAD, uint16_t data_length,const uint8_t * data);
 /***************************************************************************
 * @name      LinIf_Tp_tx_status
 * @brief     get transmit isotp status, call this fucntion after LinIf_TpTransmitSync

@@ -32,23 +32,21 @@ extern uint8_t lin_nad;
 static bool send_lin_diagnose(uint8_t *tempBuffer, uint16_t data_length, uint8_t *rxDataArray, uint16_t receive_array_size)
 {
     bool service_was_ok = true;
-    isoTp_lin_message_status wait_status;
-    uint8_t number_of_retry = 1;
+    lin_message_status wait_status;
+    uint8_t number_of_retry = 5;
     uint16_t length = 0;
     uint8_t NAD;
-    static uint32_t counter = 0;
+    int32_t handle = -1;
     LinIf_Tp_set_rx_ready();
-    LinIf_TpResetReceiveSync();
-    LinIf_TpTransmitSync(lin_nad, data_length, tempBuffer);
 
-    
+    LinIf_TpTransmitSync(&handle, lin_nad, data_length, tempBuffer);
+
     do
     {
-        LinIf_Tp_tx_status((isoTp_lin_message_status *)&wait_status);
-        if (EN_COMPLETED != wait_status)
+        LinIf_Tp_tx_status((lin_message_status *)&wait_status);
+        if (LD_COMPLETED != wait_status)
             vTaskDelay(5);
-    } while (EN_COMPLETED != wait_status);
-    
+    } while (LD_COMPLETED != wait_status);
 
     do
     {
@@ -58,11 +56,11 @@ static bool send_lin_diagnose(uint8_t *tempBuffer, uint16_t data_length, uint8_t
             if (number_of_retry > 0)
             {
                 number_of_retry--;
-                LinIf_send_diagnose_header();
+                LinIf_send_diagnose_header(&handle);
             }
-        }
-        LinIf_TpReceiveSync(&NAD, &length, tempBuffer, portMAX_DELAY);
-
+        } 
+        LinIf_TpReceiveSync(handle, &NAD, &length, tempBuffer, portMAX_DELAY);
+         
         bool dataValide = true;
         if (length > 0)
         {
@@ -70,7 +68,6 @@ static bool send_lin_diagnose(uint8_t *tempBuffer, uint16_t data_length, uint8_t
             {
                 if (rxDataArray[i] != tempBuffer[i])
                 {
-                    serialOutput_sendString("FaltResponse%d : %.*s\n", counter++, length, tempBuffer);
                     dataValide = false;
                     break;
                 }
@@ -176,7 +173,8 @@ static void CanTp_localProcessMessage(uint16_t handler_id, uint16_t U16_DLC, uin
 void communication_if_init(void)
 {
 
-    can_lin_variant = appl_get_can_lin_var();
+    uint8_t can_lin_variant;
+    nvsIf_get_can_lin_var(&can_lin_variant);
 
     if (can_lin_variant == 0)
     {
@@ -189,7 +187,8 @@ void communication_if_init(void)
 communication_fnc get_communication_if(void)
 {
     communication_fnc mycommunication_fnc = NULL;
-    can_lin_variant = appl_get_can_lin_var();
+    uint8_t can_lin_variant;
+    nvsIf_get_can_lin_var(&can_lin_variant);
     if (can_lin_variant == 0)
     {
         mycommunication_fnc = &send_can_diagnose;
