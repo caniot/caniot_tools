@@ -2,7 +2,7 @@ set(COMPONENT_SRCS  "main.c"
                     "actions_task.c"
                    )
                    
-set(COMPONENT_ADD_INCLUDEDIRS "."  "${CMAKE_CURRENT_SOURCE_DIR}/.caniotBoxLib/includes" "LIN/")
+set(COMPONENT_ADD_INCLUDEDIRS "."  "${CMAKE_CURRENT_SOURCE_DIR}/.caniotBoxLib/includes")
 set(COMPONENT_REQUIRES)
 register_component()
 if("esp32s3" STREQUAL "${IDF_TARGET}")

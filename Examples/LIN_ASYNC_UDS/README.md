@@ -1,4 +1,4 @@
-# LIN communication example
+# LIN asynchronous UDS Diagnostic requests/response example
 
 > **Note**
 > ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please refer to [ESP-IDF(release/v4.4.4) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.4/esp32/get-started/index.html#installation-step-by-step).
