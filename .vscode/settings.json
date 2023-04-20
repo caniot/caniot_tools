@@ -109,7 +109,8 @@
     "uds_service_fnc.h": "c",
     "json.h": "c",
     "cintelhex.h": "c",
-    "communication_if.h": "c"
+    "communication_if.h": "c",
+    "format": "c"
   },
   "idf.adapterTargetName": "esp32",
   "idf.portWin": "COM11",

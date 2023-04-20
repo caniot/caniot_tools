@@ -37,7 +37,7 @@ static void Lin_appl_diagnose_Task(void *clientSock)
   appl_message_t diagnose_event;
   diagnose_event.bufferPtr = &myBuffer;
   diagnose_event.event = 2;
-int32_t handle;
+  int32_t isoTP_handler_id;
   while (1)
   {
     if (xQueueReceive(appl_diagnose_queue, &appl_message, portMAX_DELAY))
@@ -49,8 +49,8 @@ int32_t handle;
       {
         if (appl_message.bufferPtr[0] == 1)
         {
-          LinIf_TpTransmitSync(&handle,APPL_NAD, sizeof(writeData), writeData);
-          if (handle != -1)
+          LinIf_TpTransmitSync(&isoTP_handler_id, APPL_NAD, sizeof(writeData), writeData);
+          if (isoTP_handler_id != -1)
           {
             diagnose_event.bufferPtr[0] = 1;
             xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
@@ -61,11 +61,10 @@ int32_t handle;
             LinIf_Tp_tx_status(&message_status);
             vTaskDelay(5);
           } while (EN_IN_PROGRESS == message_status);
-          LinIf_TpReceiveSync(handle,&NAD, &length, UDS_diag_data, portMAX_DELAY);
+          LinIf_TpReceiveSync(isoTP_handler_id, &NAD, &length, UDS_diag_data, portMAX_DELAY);
 
           if (length > 0)
           {
-
             diagnose_event.bufferPtr[0] = 0;
             xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
           }
@@ -80,8 +79,8 @@ int32_t handle;
 
           LinIf_Tp_set_rx_ready();
 
-          LinIf_TpTransmitSync(&handle,APPL_NAD, sizeof(readData), readData);
-          if (handle != -1)
+          LinIf_TpTransmitSync(&isoTP_handler_id, APPL_NAD, sizeof(readData), readData);
+          if (isoTP_handler_id != -1)
           {
             diagnose_event.bufferPtr[0] = 1;
             xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
@@ -93,20 +92,17 @@ int32_t handle;
             vTaskDelay(5);
           } while (EN_IN_PROGRESS == message_status);
 
-          LinIf_TpReceiveSync(handle,&NAD, &length, UDS_diag_data, portMAX_DELAY);
+          LinIf_TpReceiveSync(isoTP_handler_id, &NAD, &length, UDS_diag_data, portMAX_DELAY);
 
           if (length > 0)
           {
-            if (memcmp("no Data", UDS_diag_data, 7) == 0) /* no answer from last UDS request*/
-            {
-              diagnose_event.bufferPtr[0] = 1;
-              xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
-            }
-            else
-            {
-              diagnose_event.bufferPtr[0] = 0;
-              xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
-            }
+            diagnose_event.bufferPtr[0] = 0;
+            xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
+          }
+          else
+          {
+            diagnose_event.bufferPtr[0] = 1;
+            xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
           }
         }
 
@@ -125,23 +121,26 @@ static void LinMessageReceive_0x01(uint8_t dlc, uint8_t *data)
   static char myBuffer;
   appl_message_t lin_event;
 
-  LIN_ENTER_CRITICAL();
-  data[0] = data[0] + 1;
-  LIN_EXIT_CRITICAL();
-  LinIf_update_frame_data(0x01, data);
-
-  lin_event.event = 0;
-  lin_event.bufferPtr = &myBuffer;
-
-  if (data[0] < 128)
+  if (dlc > 0)
   {
-    lin_event.bufferPtr[0] = 1;
-    xQueueSend(status_queue, &lin_event, pdMS_TO_TICKS(1));
-  }
-  else
-  {
-    lin_event.bufferPtr[0] = 0;
-    xQueueSend(status_queue, &lin_event, pdMS_TO_TICKS(1));
+    LIN_ENTER_CRITICAL();
+    data[0] = data[0] + 1;
+    LIN_EXIT_CRITICAL();
+    LinIf_update_frame_data(0x01, data);
+
+    lin_event.event = 0;
+    lin_event.bufferPtr = &myBuffer;
+
+    if (data[0] < 128)
+    {
+      lin_event.bufferPtr[0] = 1;
+      xQueueSend(status_queue, &lin_event, pdMS_TO_TICKS(1));
+    }
+    else
+    {
+      lin_event.bufferPtr[0] = 0;
+      xQueueSend(status_queue, &lin_event, pdMS_TO_TICKS(1));
+    }
   }
 }
 static void LinMessageReceive_0x02(uint8_t dlc, uint8_t *data)
@@ -149,34 +148,37 @@ static void LinMessageReceive_0x02(uint8_t dlc, uint8_t *data)
   static bool bitResult0;
   static char myBuffer;
   appl_message_t lin_event;
-  lin_event.bufferPtr = &myBuffer;
 
-  uint32_t *dataPointer = (uint32_t *)data;
-  bool bit0 = TestBit(dataPointer, 0);
-  if (bit0)
+  if (dlc > 0)
   {
-
-    lin_event.event = 1;
-
-    if (!bitResult0)
+    lin_event.bufferPtr = &myBuffer;
+    uint32_t *dataPointer = (uint32_t *)data;
+    bool bit0 = TestBit(dataPointer, 0);
+    if (bit0)
     {
-      lin_event.bufferPtr[0] = 1;
-      xQueueSend(status_queue, &lin_event, pdMS_TO_TICKS(1));
-      xQueueSend(appl_diagnose_queue, &lin_event, pdMS_TO_TICKS(1));
-    }
-  }
-  else
-  {
-    lin_event.event = 1;
 
-    if (bitResult0)
-    {
-      lin_event.bufferPtr[0] = 0;
-      xQueueSend(status_queue, &lin_event, pdMS_TO_TICKS(1));
-      xQueueSend(appl_diagnose_queue, &lin_event, pdMS_TO_TICKS(1));
+      lin_event.event = 1;
+
+      if (!bitResult0)
+      {
+        lin_event.bufferPtr[0] = 1;
+        xQueueSend(status_queue, &lin_event, pdMS_TO_TICKS(1));
+        xQueueSend(appl_diagnose_queue, &lin_event, pdMS_TO_TICKS(1));
+      }
     }
+    else
+    {
+      lin_event.event = 1;
+
+      if (bitResult0)
+      {
+        lin_event.bufferPtr[0] = 0;
+        xQueueSend(status_queue, &lin_event, pdMS_TO_TICKS(1));
+        xQueueSend(appl_diagnose_queue, &lin_event, pdMS_TO_TICKS(1));
+      }
+    }
+    bitResult0 = bit0;
   }
-  bitResult0 = bit0;
 }
 
 void linAppl_init(void)

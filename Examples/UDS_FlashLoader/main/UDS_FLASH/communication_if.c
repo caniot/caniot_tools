@@ -40,6 +40,10 @@ static bool send_lin_diagnose(uint8_t *tempBuffer, uint16_t data_length, uint8_t
     LinIf_Tp_set_rx_ready();
 
     LinIf_TpTransmitSync(&handle, lin_nad, data_length, tempBuffer);
+    if (handle == -1)
+    {
+        return false;
+    }
 
     do
     {
@@ -58,9 +62,9 @@ static bool send_lin_diagnose(uint8_t *tempBuffer, uint16_t data_length, uint8_t
                 number_of_retry--;
                 LinIf_send_diagnose_header(&handle);
             }
-        } 
+        }
         LinIf_TpReceiveSync(handle, &NAD, &length, tempBuffer, portMAX_DELAY);
-         
+
         bool dataValide = true;
         if (length > 0)
         {
