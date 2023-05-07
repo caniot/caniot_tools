@@ -253,7 +253,7 @@ static async_uds_diagnose_rx_t *diag_IO_control(const uint8_t NAD, uint16_t data
     }
     return &my_async_uds_diagnose_rx;
 }
-void asyncDiagTask1(void *clientSock)
+void asyncDiagTask1(void *TaskArg)
 {
     const uint8_t PIDs[3] = {0xAA, 0x55, 0xF0};
     const uint8_t buffer_read_data_by_identifier[2] = {0xF0, 0x10};
@@ -295,7 +295,7 @@ void asyncDiagTask1(void *clientSock)
 
     vTaskDelete(NULL);
 }
-void asyncDiagTask2(void *clientSock)
+void asyncDiagTask2(void *TaskArg)
 {
     const uint8_t uds_service_data[4] = {0xFF, 0xFE, 0xAA, 0x55};
     const uint8_t diag_session_control_data[1] = {0x02};
@@ -338,7 +338,7 @@ void asyncDiagTask2(void *clientSock)
 
     vTaskDelete(NULL);
 }
-void asyncDiagTask3(void *clientSock)
+void asyncDiagTask3(void *TaskArg)
 {
     const uint8_t diag_fault_memory_read_data[3] = {0xAA, 0x55, 0xF0};
     const uint8_t diag_fault_memory_clear_data[2] = {0xF0, 0x10};

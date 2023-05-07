@@ -25,7 +25,7 @@
 
 extern QueueHandle_t actions_queue;
 
-void caniot_actionsTask(void *clientSock)
+void caniot_actionsTask(void *TaskArg)
 {
   int message_actions = -1;
   while (1)

@@ -27,7 +27,7 @@ extern QueueHandle_t status_queue;
 
 static QueueHandle_t appl_diagnose_queue;
 
-static void Lin_appl_diagnose_Task(void *clientSock)
+static void Lin_appl_diagnose_Task(void *TaskArg)
 {
   static char myBuffer;
 

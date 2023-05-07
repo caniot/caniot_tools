@@ -24,7 +24,7 @@
 #include "esp_heap_caps.h"
 #include "lvgl_if.h"
 #include "nvs_flash.h"
-extern void caniot_actionsTask(void *clientSock);
+extern void caniot_actionsTask(void *TaskArg);
 extern void diag_init();
 static  const char *nvs_part_name = "LIN_ASYNC_UDS";
 

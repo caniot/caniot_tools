@@ -110,7 +110,10 @@
     "json.h": "c",
     "cintelhex.h": "c",
     "communication_if.h": "c",
-    "format": "c"
+    "format": "c",
+    "iterator": "c",
+    "xiosbase": "c",
+    "queue": "c"
   },
   "idf.adapterTargetName": "esp32",
   "idf.portWin": "COM11",

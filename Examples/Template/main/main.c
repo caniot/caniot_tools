@@ -24,7 +24,7 @@
 #include "esp_heap_caps.h"
 #include "lvgl_if.h"
 
-extern void caniot_actionsTask(void *clientSock);
+extern void caniot_actionsTask(void *TaskArg);
 
 void send_caniot_data(caniot_message_t *message_arg)
 {

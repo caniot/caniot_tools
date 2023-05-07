@@ -25,7 +25,7 @@
 #include "lvgl_if.h"
 
 extern void lvgl_create_CAN_container(lv_obj_t *parent);
-extern void caniot_actionsTask(void *clientSock);
+extern void caniot_actionsTask(void *TaskArg);
 extern void linAppl_init(void);
 
 void send_caniot_data(caniot_message_t *message_arg)

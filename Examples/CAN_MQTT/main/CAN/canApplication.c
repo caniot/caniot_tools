@@ -131,7 +131,7 @@ static void canMessageReceive_502(uint8_t dlc, uint8_t *data)
 
     xQueueSend(appl_diagnose_queue, data, pdMS_TO_TICKS(1));
 }
-static void mqtt_appl_Task(void *clientSock)
+static void mqtt_appl_Task(void *TaskArg)
 {
 
     uint8_t *diagnose_event = (uint8_t *)malloc(100 * 16);
