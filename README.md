@@ -33,7 +33,7 @@ Caniot tool is a Multi-platform simulation, analysis and test environment for de
 
 ## Contact Us
 
-* If you have any technical issues or need support, please submit issue tickets at [GitHub Issues](https://github.com/caniot/caniot_tools/issues) for help.
+* If you have any technical issues or need support, please send us a email to support@caniot.eu or submit issue tickets at [GitHub Issues](https://github.com/caniot/caniot_tools/issues) for help.
 
 
 ## Buy it on Tindie
