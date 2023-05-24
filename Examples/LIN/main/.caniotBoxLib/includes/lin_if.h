@@ -94,7 +94,8 @@ extern void LinIf_set_scheduler_sync(uint8_t scheduler, uint8_t entry);
 *            The number of bytes received is stored in length.
 *
 * @attention 1. This API should be called after caniotBox_init
-* @param     NAD : pointer to save the Slave NAD
+* @param     handle : handle created by LinIf_TpTransmitSync
+*            NAD : pointer to save the Slave NAD
 *            data_length : pointer for The number of bytes received (max 4096)
 *            data : pointer to store the diagnostic data received. 
 *
@@ -106,7 +107,8 @@ extern void LinIf_TpReceiveSync(int32_t handle,uint8_t *NAD, uint16_t *length, u
 * @brief     send diagnostic data with the given data length for the given NAD slave over Iso tp protocol.
 *
 * @attention 1. This API should be called after caniotBox_init
-* @param     NAD :  specify the Slave NAD
+* @param     handle : handle  associated to this request: if -1 then no request can be send 
+*            NAD :  specify the Slave NAD
 *            data_length : specify the data length(max 4096)
 *            data : pointer to the diagnostic data       
 * @return    void
@@ -158,11 +160,11 @@ extern void LinIf_TpResetReceiveSync(void);
 * @brief     schedule diagnose request header with the ID 0x3D from the master.
 *
 * @attention 1. This API should be called after caniotBox_init
-* @param     void
+* @param      handle : handle  associated to this request: if -1 then no request can be send 
 *
 * @return    void
 *****************************************************************************/
-void LinIf_send_diagnose_header(void);
+void LinIf_send_diagnose_header(int32_t *handle);
 #ifdef __cplusplus
 }
 #endif

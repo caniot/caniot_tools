@@ -50,28 +50,30 @@ static void Lin_appl_diagnose_Task(void *TaskArg)
         if (appl_message.bufferPtr[0] == 1)
         {
           LinIf_TpTransmitSync(&isoTP_handler_id, APPL_NAD, sizeof(writeData), writeData);
-          if (isoTP_handler_id != -1)
+          if (isoTP_handler_id == -1)
           {
             diagnose_event.bufferPtr[0] = 1;
-            xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
-            return;
-          }
-          do
-          {
-            LinIf_Tp_tx_status(&message_status);
-            vTaskDelay(5);
-          } while (EN_IN_PROGRESS == message_status);
-          LinIf_TpReceiveSync(isoTP_handler_id, &NAD, &length, UDS_diag_data, portMAX_DELAY);
-
-          if (length > 0)
-          {
-            diagnose_event.bufferPtr[0] = 0;
             xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
           }
           else
           {
-            diagnose_event.bufferPtr[0] = 1;
-            xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
+            do
+            {
+              LinIf_Tp_tx_status(&message_status);
+              vTaskDelay(5);
+            } while (EN_IN_PROGRESS == message_status);
+            LinIf_TpReceiveSync(isoTP_handler_id, &NAD, &length, UDS_diag_data, portMAX_DELAY);
+
+            if (length > 0)
+            {
+              diagnose_event.bufferPtr[0] = 0;
+              xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
+            }
+            else
+            {
+              diagnose_event.bufferPtr[0] = 1;
+              xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
+            }
           }
         }
         else
@@ -80,29 +82,31 @@ static void Lin_appl_diagnose_Task(void *TaskArg)
           LinIf_Tp_set_rx_ready();
 
           LinIf_TpTransmitSync(&isoTP_handler_id, APPL_NAD, sizeof(readData), readData);
-          if (isoTP_handler_id != -1)
+          if (isoTP_handler_id == -1)
           {
             diagnose_event.bufferPtr[0] = 1;
-            xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
-            return;
-          }
-          do
-          {
-            LinIf_Tp_tx_status(&message_status);
-            vTaskDelay(5);
-          } while (EN_IN_PROGRESS == message_status);
-
-          LinIf_TpReceiveSync(isoTP_handler_id, &NAD, &length, UDS_diag_data, portMAX_DELAY);
-
-          if (length > 0)
-          {
-            diagnose_event.bufferPtr[0] = 0;
             xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
           }
           else
           {
-            diagnose_event.bufferPtr[0] = 1;
-            xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
+            do
+            {
+              LinIf_Tp_tx_status(&message_status);
+              vTaskDelay(5);
+            } while (EN_IN_PROGRESS == message_status);
+
+            LinIf_TpReceiveSync(isoTP_handler_id, &NAD, &length, UDS_diag_data, portMAX_DELAY);
+
+            if (length > 0)
+            {
+              diagnose_event.bufferPtr[0] = 0;
+              xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
+            }
+            else
+            {
+              diagnose_event.bufferPtr[0] = 1;
+              xQueueSend(status_queue, &diagnose_event, pdMS_TO_TICKS(1));
+            }
           }
         }
 

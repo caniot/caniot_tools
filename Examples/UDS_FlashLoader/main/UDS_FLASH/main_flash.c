@@ -81,7 +81,7 @@ static void getFileDataFlash(const cJSON *const mainArray)
                     uint32_t *min = (uint32_t *)calloc(IHEX_ELACounter, 4);
                     uint32_t *max = (uint32_t *)calloc(IHEX_ELACounter, 4);
 
-                    int getAdress = ihex_rs_get_address_range(appl_hex_record, &min[0], &max[0]);
+                    int getAdress = ihex_rs_get_all_address_range(appl_hex_record, &min[0], &max[0]);
                     uint32_t AllRange = 0;
                     if (getAdress == 0)
                     {
