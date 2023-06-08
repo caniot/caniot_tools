@@ -36,6 +36,8 @@ static const char *get_filename_ext(const char *filename)
 }
 static void getFileDataFlash(const cJSON *const mainArray)
 {
+    uint32_t *min = NULL;
+    uint32_t *max = NULL;
     appl_message_t messagefile;
 
     cJSON *array3 = cJSON_GetObjectItem(mainArray, "Infos");
@@ -58,6 +60,7 @@ static void getFileDataFlash(const cJSON *const mainArray)
         {
 
             appl_hex_record = ihex_rs_from_mem(messagefile.bufferPtr, messagefile.length);
+            free(messagefile.bufferPtr);
             if (appl_hex_record != NULL)
             {
                 char *error = ihex_error();
@@ -78,8 +81,8 @@ static void getFileDataFlash(const cJSON *const mainArray)
                         }
                     }
 
-                    uint32_t *min = (uint32_t *)calloc(IHEX_ELACounter, 4);
-                    uint32_t *max = (uint32_t *)calloc(IHEX_ELACounter, 4);
+                    min = (uint32_t *)calloc(IHEX_ELACounter, 4);
+                    max = (uint32_t *)calloc(IHEX_ELACounter, 4);
 
                     int getAdress = ihex_rs_get_all_address_range(appl_hex_record, &min[0], &max[0]);
                     uint32_t AllRange = 0;
@@ -118,6 +121,14 @@ static void getFileDataFlash(const cJSON *const mainArray)
                 }
             }
         }
+    }
+    if (min != NULL)
+    {
+        free(min);
+    }
+    if (max != NULL)
+    {
+        free(max);
     }
 }
 
