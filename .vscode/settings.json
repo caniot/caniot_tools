@@ -113,7 +113,11 @@
     "format": "c",
     "iterator": "c",
     "xiosbase": "c",
-    "queue": "c"
+    "queue": "c",
+    "uds_https_ota.h": "c",
+    "esp_wifi.h": "c",
+    "esp_efuse.h": "c",
+    "xlocbuf": "c"
   },
   "idf.adapterTargetName": "esp32",
   "idf.portWin": "COM11",
