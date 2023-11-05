@@ -1,4 +1,4 @@
-# UDS FlashLoader example
+# OTA UDS FlashLoader example
 
 > **Note**
 > ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please refer to [ESP-IDF(release/v4.4.4) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.4/esp32/get-started/index.html#installation-step-by-step).
@@ -8,7 +8,7 @@
 > S32K1xx NXP EVB is required in this example. Please refer to [S32K116-Q048 Evaluation Board for Automotive General Purpose](https://www.nxp.com/design/development-boards/automotive-development-platforms/s32k-mcu-platforms/s32k116-q048-evaluation-board-for-automotive-general-purpose:S32K116EVB).
 
 
-This example demonstrate a OTA (Over-The-Air) firmware updates for NXP S32K controller over CAN FD communication using UDS Protocol with CANIOT Tools.The bin `S32K1_uds_flash_CAN_BlueLed.bin` file is stored into dropbox Cloud and the esp32 will download this file first via HTTPS. Example does the following steps:
+This example demonstrate a OTA (Over-The-Air) firmware updates for a NXP S32K controller over CAN FD communication using UDS Protocol with CANIOT Tools.The bin `S32K1_uds_flash_CAN_BlueLed.bin` file is stored into dropbox Cloud and the esp32 will download this file first via HTTPS. Example does the following steps:
 
 1. Use an  `caniotBox_init` function to initialize caniotBoxLib peripheral.
 2. Use an  `serialOutput_configure` function to initialize console serial with the given baudrate(only in wifi mode).
