@@ -55,7 +55,9 @@ void lvgl_driver_deinit(void)
 {
     disp_spi_remove_device();
     tp_spi_remove_device();
+#ifndef CONFIG_LV_TOUCH_CONTROLLER_FT6X06
     spi_bus_free(TOUCH_SPI_HOST);
+#endif
 }
 void lvgl_driver_init(void)
 {
@@ -82,19 +84,37 @@ void lvgl_driver_init(void)
 
 #if defined(SHARED_SPI_BUS)
     ESP_LOGI(TAG, "Initializing shared SPI master");
+#ifdef CONFIG_LV_TOUCH_CONTROLLER_FT6X06
+    lvgl_spi_driver_init(TFT_SPI_HOST,
+                         DISP_SPI_MISO, DISP_SPI_MOSI, DISP_SPI_CLK,
+                         SPI_BUS_MAX_TRANSFER_SZ, 1,
+                         -1, -1);
+    disp_spi_add_device(TFT_SPI_HOST);
 
+    disp_driver_init();
+
+    ESP_LOGI(TAG, "Initializing I2C master for touch");
+
+    lvgl_i2c_driver_init(TOUCH_I2C_PORT,
+                         TOUCH_I2C_SDA, TOUCH_I2C_SCL,
+                         TOUCH_I2C_SPEED_HZ);
+
+    touch_driver_init();
+    return;
+#else
     lvgl_spi_driver_init(TFT_SPI_HOST,
                          TP_SPI_MISO, DISP_SPI_MOSI, DISP_SPI_CLK,
                          SPI_BUS_MAX_TRANSFER_SZ, 1,
                          -1, -1);
-
-    disp_spi_add_device(TFT_SPI_HOST);
     tp_spi_add_device(TOUCH_SPI_HOST);
+    disp_spi_add_device(TFT_SPI_HOST);
 
     disp_driver_init();
     touch_driver_init();
 
     return;
+#endif
+
 #endif
 
 #if defined(SHARED_I2C_BUS)
@@ -138,14 +158,19 @@ void lvgl_driver_init(void)
 #if CONFIG_LV_TOUCH_CONTROLLER != TOUCH_CONTROLLER_NONE
 #if defined(CONFIG_LV_TOUCH_DRIVER_PROTOCOL_SPI)
     ESP_LOGI(TAG, "Initializing SPI master for touch");
-
+#ifndef CONFIG_LV_TOUCH_CONTROLLER_FT6X06
     lvgl_spi_driver_init(TOUCH_SPI_HOST,
                          TP_SPI_MISO, TP_SPI_MOSI, TP_SPI_CLK,
                          0 /* Defaults to 4094 */, 1,
                          -1, -1);
 
     tp_spi_add_device(TOUCH_SPI_HOST);
-
+#else
+    lvgl_spi_driver_init(TFT_SPI_HOST,
+                         TP_SPI_MISO, TP_SPI_MOSI, TP_SPI_CLK,
+                         0 /* Defaults to 4094 */, 1,
+                         -1, -1);
+#endif
     touch_driver_init();
 #elif defined(CONFIG_LV_TOUCH_DRIVER_PROTOCOL_I2C)
     ESP_LOGI(TAG, "Initializing I2C master for touch");
@@ -221,7 +246,7 @@ bool lvgl_spi_driver_init(int host,
 #elif defined(CONFIG_IDF_TARGET_ESP32S3)
     assert((SPI2_HOST <= host) && (SPI3_HOST >= host));
     const char *spi_names[] = {
-        "SPI1_HOST", "SPI2_HOST", "SPI3_HOST"};        
+        "SPI1_HOST", "SPI2_HOST", "SPI3_HOST"};
 #endif
 
     ESP_LOGI(TAG, "Configuring SPI host %s (%d)", spi_names[host], host);
@@ -237,10 +262,10 @@ bool lvgl_spi_driver_init(int host,
         .quadwp_io_num = quadwp_pin,
         .quadhd_io_num = quadhd_pin,
         .max_transfer_sz = max_transfer_sz};
-#if CONFIG_IDF_TARGET_ESP32 
-  #define LVGL_SPI_DEFAULT_DMA  dma_channel
-#elif CONFIG_IDF_TARGET_ESP32S3 
-  #define LVGL_SPI_DEFAULT_DMA  SPI_DMA_CH_AUTO
+#if CONFIG_IDF_TARGET_ESP32
+#define LVGL_SPI_DEFAULT_DMA dma_channel
+#elif CONFIG_IDF_TARGET_ESP32S3
+#define LVGL_SPI_DEFAULT_DMA SPI_DMA_CH_AUTO
 #endif
     ESP_LOGI(TAG, "Initializing SPI bus...");
     esp_err_t ret = spi_bus_initialize(host, &buscfg, LVGL_SPI_DEFAULT_DMA);

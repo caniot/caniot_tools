@@ -23,10 +23,8 @@
 #include "driver/uart.h"
 #include "esp_heap_caps.h"
 
-
 #define RAW_BYTES_TX 0
 #define RAW_BYTES_RX 1
-
 
 extern void send_caniot_data(caniot_message_t *message_arg);
 #define APPL_COLOR_SIZE 6
@@ -71,44 +69,47 @@ void RawBytes_ExampleTask(void *TaskArg)
     /* give data pointer as NULL to retrieve only data length*/
     event = 0;
     CPIf_Retrieve_Data_Sync(0, &event, &length, NULL, portMAX_DELAY);
-    serialOutput_sendString("%d %d\n", event, length);
-    switch (event)
+    if (length > 0 || event == RAW_BYTES_RX)
     {
-    case RAW_BYTES_TX:
-    {
-      if (length > 0)
+      serialOutput_sendString("%d %d\n", event, length);
+      switch (event)
       {
-        if (length > INITIAL_BUFFER_LEN || length > actualLength)
+      case RAW_BYTES_TX:
+      {
+        if (length > 0)
         {
-          actualLength = length;
-          data = realloc(data, length);
-        }
-        CPIf_Retrieve_Data_Sync(0, &event, &length, data, portMAX_DELAY);
-        uint8_t random = (uint8_t)(esp_random() & 0xFF);
-        for (size_t i = 0; i < length; i++)
-        {
-          data[i] = (data[i] ^ random);
-        }
-        /*debug output*/
+          if (length > INITIAL_BUFFER_LEN || length > actualLength)
+          {
+            actualLength = length;
+            data = realloc(data, length);
+          }
+          CPIf_Retrieve_Data_Sync(0, &event, &length, data, portMAX_DELAY);
+          uint8_t random = (uint8_t)(esp_random() & 0xFF);
+          for (size_t i = 0; i < length; i++)
+          {
+            data[i] = (data[i] ^ random);
+          }
+          /*debug output*/
 
-        serialOutput_send_buffer_hex("CPIf_Retrieve_Data_Sync0", APPL_COLOR[appl_color_counter], data, length);
-        appl_color_counter++;
-        if (appl_color_counter >= APPL_COLOR_SIZE)
-          appl_color_counter = 0;
+          serialOutput_send_buffer_hex("CPIf_Retrieve_Data_Sync0", APPL_COLOR[appl_color_counter], data, length);
+          appl_color_counter++;
+          if (appl_color_counter >= APPL_COLOR_SIZE)
+            appl_color_counter = 0;
+        }
       }
-    }
-    break;
-    case RAW_BYTES_RX:
-    {
-      uint16_t lengthReceiver = 0;
-      uint8_t dataReceive[1];
-      CPIf_Retrieve_Data_Sync(0, &event, &lengthReceiver, dataReceive, portMAX_DELAY);
-      send_caniot_protocol_data_back(data, length);
-    }
-
-    break;
-    default:
       break;
+      case RAW_BYTES_RX:
+      {
+        uint16_t lengthReceiver = 0;
+        uint8_t dataReceive[1];
+        CPIf_Retrieve_Data_Sync(0, &event, &lengthReceiver, dataReceive, portMAX_DELAY);
+        send_caniot_protocol_data_back(data, length);
+      }
+
+      break;
+      default:
+        break;
+      }
     }
   }
   vTaskDelete(NULL);

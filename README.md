@@ -29,7 +29,7 @@ Caniot tool is a Multi-platform simulation, analysis and test environment for de
 
 * **Step 1**. Run command `git clone --recursive https://github.com/caniot/caniot_tools.git` to download the source of this project.
 * **Step 2**. install Caniot Application for your OS [caniot app](./caniot_app).
-* **Step 3**. ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please refer to [ESP-IDF(release/v4.4.4) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.4/esp32/get-started/index.html#installation-step-by-step).
+* **Step 3**. ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step).
 * **Step 4**. now you can build a CAN example[build a CAN example](./Examples/CAN).
 
 

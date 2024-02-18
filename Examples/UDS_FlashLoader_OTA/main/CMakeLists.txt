@@ -10,7 +10,11 @@ idf_component_register(SRCS "main.c"
                             EMBED_TXTFILES ${CMAKE_CURRENT_SOURCE_DIR}/server_certs/ca_cert.pem)
 
 if("esp32s3" STREQUAL "${IDF_TARGET}")
-add_prebuilt_library(libprebuilt "${CMAKE_CURRENT_SOURCE_DIR}/.caniotBoxLib/caniotBoxLib_s3.a" REQUIRES  lvgl)
+    if(CONFIG_LV_TFT_DISPLAY_CONTROLLER_ILI9488)
+        add_prebuilt_library(libprebuilt "${CMAKE_CURRENT_SOURCE_DIR}/.caniotBoxLib/caniotBoxLib_s31.a" REQUIRES  lvgl)
+    else()
+        add_prebuilt_library(libprebuilt "${CMAKE_CURRENT_SOURCE_DIR}/.caniotBoxLib/caniotBoxLib_s3.a" REQUIRES  lvgl)
+    endif()
 elseif("esp32" STREQUAL "${IDF_TARGET}")
 add_prebuilt_library(libprebuilt "${CMAKE_CURRENT_SOURCE_DIR}/.caniotBoxLib/caniotBoxLib_s1.a" REQUIRES  lvgl)
 endif()

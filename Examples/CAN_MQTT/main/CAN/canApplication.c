@@ -159,12 +159,13 @@ void canAppl_init(void)
     /*attach handler to be called on receiving message 0x502 on channel 1*/
     CanIf_attach_receive(1, 0x502U, &canMessageReceive_502);
 
-    int connection = nvsIf_get_connection_var();
+    uint8_t connection;
+    nvsIf_get_connection_var(&connection);
     if (connection == 1) /*only wifi mode*/
     {
         mqtt_app_start();
     }
 
  
-    xTaskCreate(mqtt_appl_Task, "Lin_appl_diagnose_Task", 3000, (void *)0, 5, NULL);
+    xTaskCreate(mqtt_appl_Task, "mqtt_appl_Task", 3000, (void *)0, 5, NULL);
 }

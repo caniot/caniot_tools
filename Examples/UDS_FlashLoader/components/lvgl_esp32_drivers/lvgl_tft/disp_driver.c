@@ -4,7 +4,7 @@
 
 #include "disp_driver.h"
 #include "disp_spi.h"
-
+#include "esp_lcd_backlight.h"
 void disp_driver_init(void)
 {
 #if defined CONFIG_LV_TFT_DISPLAY_CONTROLLER_ILI9341
@@ -40,6 +40,19 @@ void disp_driver_init(void)
 #elif defined CONFIG_LV_TFT_DISPLAY_CONTROLLER_UC8151D
    uc8151d_init();
 #endif
+
+    // We still use menuconfig for these settings
+    // It will be set up during runtime in the future
+    const disp_backlight_config_t bckl_config = {
+        .gpio_num = 15,
+        .pwm_control = false,
+        .output_invert = false, // Backlight on high
+        .timer_idx = 0,
+        .channel_idx = 0 // @todo this prevents us from having two PWM controlled displays
+    };
+    disp_backlight_h bckl_handle = disp_backlight_new(&bckl_config);
+    disp_backlight_set(bckl_handle, 100);
+    // return bckl_handle;
 }
 
 void disp_driver_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color_map)

@@ -1,7 +1,7 @@
 # RAW_BYTES_PROTOCOL example
 
 > **Note**
-> ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please refer to [ESP-IDF(release/v4.4.4) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.4/esp32/get-started/index.html#installation-step-by-step).
+> ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step).
 
 This is the simplest buildable example to exchange Raw Bytes from caniot app Diagnose Windows to CaniotBox, the user can use this Bytes to send UDS diagnose Frames or to send Raw Bytes over Kline Protocol 
 
@@ -37,7 +37,7 @@ This example runs on CANIOTBOX boards without any extra modifications required,
 ### Build and Flash
 
 Build the project using idf.py build and flash it to the board using caniot application
-1. open  `ESP-IDF 4.4.4 CMD`, Go to the project directory with `cd {YOUR PATH}\caniot_tools\Examples\RAW_BYTES_PROTOCOL`  .
+1. open  `ESP-IDF 4.4.6 CMD`, Go to the project directory with `cd {YOUR PATH}\caniot_tools\Examples\RAW_BYTES_PROTOCOL`  .
 2. run: `del sdkconfig && idf.py -B build_s1 -D SDKCONFIG_DEFAULTS=sdkconfig_s1 -D IDF_TARGET=esp32 build` for HW V1.5 or  run `del sdkconfig && idf.py -B build_s3 -D SDKCONFIG_DEFAULTS=sdkconfig_s3 -D IDF_TARGET=esp32s3 build` for HW V3.0 
 3. connect CaniotBox with caniot application as described here [USB or wifi connection](https://caniot-docu.readthedocs.io/en/latest/getting-started-caniot.html#usb-connection).
 4. select  from `menubar` `Update caniotBox`.

@@ -48,7 +48,7 @@ endif()
 if(CONFIG_LV_TFT_DISPLAY_PROTOCOL_SPI)
     list(APPEND SOURCES "lvgl_tft/disp_spi.c")
 endif()
-
+    list(APPEND SOURCES "lvgl_tft/esp_lcd_backlight.c")
 # Add touch driver to compilation only if it is selected in menuconfig
 if(CONFIG_LV_TOUCH_CONTROLLER)
     list(APPEND SOURCES "lvgl_touch/touch_driver.c")
