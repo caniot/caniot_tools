@@ -1,9 +1,5 @@
 # UDS FlashLoader example
 
-> **Note**
-> ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please follow this Video for Quick Start and refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step) to download it. 
-
-https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-04b1b8e1cc21
 
 
 > **Note**
@@ -13,7 +9,7 @@ https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-0
 This example Shows Four Demonstrations how to flash S32K controller over CAN FD communication using UDS Protocol with CANIOT Tools. Example does the following steps:
 
 1. Use an  `caniotBox_init` function to initialize caniotBoxLib peripheral.
-2. Use an  `serialOutput_configure` function to initialize console serial with the given baudrate(only in wifi mode).
+2. Use an  `serialOutput_configure` function to initialize console serial with the given baudrate(only in wifi mode for HW15).
 3. write to console using `serialOutput_sendString` or `serialOutput_sendRaw` .
 4. call `canAppl_init` to start your CAN application. this application code demonstrate how to flash S32K controller using UDS Protocol :
 
@@ -33,6 +29,15 @@ This example runs on CANIOTBOX boards without any extra modifications required,
 3. connect  `GND(Dsub3)` with  with `GND` on S32K116 EVB.
 4. copy `uds_flashLoader` Directory from [SD_CARD](./SD_CARD) to your SD CARD and  insert it into the slot.
 4. connect CaniotBox with caniot application as described here [USB connection](https://caniot-docu.readthedocs.io/en/latest/getting-started-caniot.html#usb-connection).
+
+
+### IDF Tools installations:
+
+> **Note**
+> ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please follow this Video for Quick Start and refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step) to download it. 
+
+https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-04b1b8e1cc21
+
 
 ### Build and Flash
 

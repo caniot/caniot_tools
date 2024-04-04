@@ -1,14 +1,9 @@
 # RAW_BYTES_PROTOCOL example
 
-> **Note**
-> ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please follow this Video for Quick Start and refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step) to download it. 
-
-https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-04b1b8e1cc21
-
 This is the simplest buildable example to exchange Raw Bytes from caniot app Diagnose Windows to CaniotBox, the user can use this Bytes to send UDS diagnose Frames or to send Raw Bytes over Kline Protocol 
 
 1. Use an  `caniotBox_init` function to initialize caniotBoxLib peripheral.
-2. Use an  `serialOutput_configure` function to initialize console serial with the given baudrate(only in wifi mode).
+2. Use an  `serialOutput_configure` function to initialize console serial with the given baudrate(only in wifi mode for HW15).
 3. write to console using `serialOutput_sendString` or `serialOutput_sendRaw` .
 
 ## Example folder contents
@@ -35,6 +30,12 @@ Below is short explanation of remaining files in the project folder.
 This example runs on CANIOTBOX boards without any extra modifications required,
 
 
+### IDF Tools installations:
+
+> **Note**
+> ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please follow this Video for Quick Start and refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step) to download it. 
+
+https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-04b1b8e1cc21
 
 ### Build and Flash
 

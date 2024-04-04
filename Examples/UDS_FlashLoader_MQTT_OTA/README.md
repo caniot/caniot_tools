@@ -1,10 +1,5 @@
 # UDS OTA Firmware Upgrade via MQTT example
 
-> **Note**
-> ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please follow this Video for Quick Start and refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step) to download it. 
-
-https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-04b1b8e1cc21
-
 
 > **Note**
 > S32K1xx NXP EVB is required in this example. Please refer to [S32K116-Q048 Evaluation Board for Automotive General Purpose](https://www.nxp.com/design/development-boards/automotive-development-platforms/s32k-mcu-platforms/s32k116-q048-evaluation-board-for-automotive-general-purpose:S32K116EVB).
@@ -16,7 +11,7 @@ https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-0
 This example demonstrate a FOTA (Firmware Over-The-Air) firmware updates via MQTT Protocol (HIVEMQ)  we will use 2 CaniotBoxs , CaniotBox 1 as MQTT Publischer to publisch the Firmware `S32K1_uds_flash_CAN_BlueLed.bin` over MQTT and CaniotBox 2 as MQTT subscriber to receive this Firmware and send this  to the NXP S32K controller over CAN FD communication using UDS Protocol. The bin  file is stored into CaniotBox 1 SDCARD. Example does the following steps:
 
 1. Use an  `caniotBox_init` function to initialize caniotBoxLib peripheral.
-2. Use an  `serialOutput_configure` function to initialize console serial with the given baudrate(only in wifi mode).
+2. Use an  `serialOutput_configure` function to initialize console serial with the given baudrate(only in wifi mode for HW15).
 3. write to console using `serialOutput_sendString` or `serialOutput_sendRaw` .
 4. call `mqtt_hiveMQ_publisher_init` to start  mqtt publishing  and `mqtt_hiveMQ_subscriber_init` to start  mqtt subscribing:
 
@@ -32,6 +27,14 @@ This example needs 2 CANIOTBOX boards without any extra modifications required,
 4. connect  CaniotBox 2 `CAN1 High(Dsub7)` with `CAN_H` on S32K116 EVB.
 5. connect  CaniotBox 2 `GND(Dsub3)` with  with `GND` on S32K116 EVB.
 4. power supply CaniotBox 1 and 2
+
+### IDF Tools installations:
+
+> **Note**
+> ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please follow this Video for Quick Start and refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step) to download it. 
+
+https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-04b1b8e1cc21
+
 
 ### Build and Flash
 

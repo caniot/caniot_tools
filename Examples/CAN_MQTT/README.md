@@ -1,9 +1,5 @@
-# CAN communication example
+# CAN MQTT communication example
 
-> **Note**
-> ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please follow this Video for Quick Start and refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step) to download it. 
-
-https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-04b1b8e1cc21
 
 
 This example demonstrates how to publish a CAN bus message to a MQTT Broker with caniot tools.
@@ -12,7 +8,7 @@ It uses ESP-MQTT library which implements mqtt client to connect to mqtt broker.
 Example does the following steps:
 
 1. Use an  `caniotBox_init` function to initialize caniotBoxLib peripheral.
-2. Use an  `serialOutput_configure` function to initialize console serial with the given baudrate(only in wifi mode).
+2. Use an  `serialOutput_configure` function to initialize console serial with the given baudrate(only in wifi mode for HW15).
 3. write to console using `serialOutput_sendString` or `serialOutput_sendRaw` .
 4. call `canAppl_init` to start your CAN application. this function does following steps :
 
@@ -30,6 +26,12 @@ This example runs on CANIOTBOX boards without any extra modifications required, 
 3. connect  `CAN1 High(Dsub7)` with `CAN0 High(Dsub8)`.
 4. connect CaniotBox with internet to your own station using caniot application as described here [1.2 Station client mode](https://caniot-docu.readthedocs.io/en/latest/getting-started-caniot.html#wifi-connection).
 
+### IDF Tools installations:
+
+> **Note**
+> ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please follow this Video for Quick Start and refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step) to download it. 
+
+https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-04b1b8e1cc21
 
 ### Build and Flash
 
