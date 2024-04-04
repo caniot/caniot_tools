@@ -6,7 +6,7 @@
 > S32K1xx NXP EVB is required in this example. Please refer to [S32K116-Q048 Evaluation Board for Automotive General Purpose](https://www.nxp.com/design/development-boards/automotive-development-platforms/s32k-mcu-platforms/s32k116-q048-evaluation-board-for-automotive-general-purpose:S32K116EVB).
 
 > **Note**
-> you need a MQTT Cloud to run this Example , you can visit https://www.hivemq.com/company/get-hivemq/ and create the FREE Cloud MQTT Broker that enables you to connect up to 100 devices.after that you have to  Change this Defines  `CONFIG_BROKER_URL` `CONFIG_USER` `CONFIG_USER_PASSWRD` according to the ones from HIVEMQ.
+> you need a MQTT Cloud to run this Example , you can visit https://www.hivemq.com/company/get-hivemq/ and create the FREE Cloud MQTT Broker that enables you to connect up to 100 devices.after that you have to  Change this Defines  `CONFIG_BROKER_URL` `CONFIG_USER` `CONFIG_USER_PASSWRD` according to the ones from HIVEMQ from the file `mqtt_HiveMQ_subscriber.c` `mqtt_HiveMQ_publisher.c` .
 
 
 This example demonstrate a FOTA (Firmware Over-The-Air) firmware updates via MQTT Protocol (HIVEMQ)  we will use 2 CaniotBoxs , CaniotBox 1 as MQTT Publischer to publisch the Firmware `S32K1_uds_flash_CAN_BlueLed.bin` over MQTT and CaniotBox 2 as MQTT subscriber to receive this Firmware and send this  to the NXP S32K controller over CAN FD communication using UDS Protocol. The bin  file is stored into CaniotBox 1 SDCARD. Example does the following steps:
