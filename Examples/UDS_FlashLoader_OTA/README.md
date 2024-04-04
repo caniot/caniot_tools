@@ -1,5 +1,7 @@
 # OTA UDS FlashLoader example
 
+![Capture](https://github.com/caniot/caniot_tools/assets/91652497/af83b433-a160-44e1-ba96-54096b1c19cf)
+
 
 > **Note**
 > S32K1xx NXP EVB is required in this example. Please refer to [S32K116-Q048 Evaluation Board for Automotive General Purpose](https://www.nxp.com/design/development-boards/automotive-development-platforms/s32k-mcu-platforms/s32k116-q048-evaluation-board-for-automotive-general-purpose:S32K116EVB).
@@ -41,6 +43,11 @@ Follow this Video to Build the project using idf.py build and flash it to the bo
 
 https://github.com/caniot/caniot_tools/assets/91652497/9fbb6125-5705-40ad-a361-f04848f71ef4
 
+### Troubleshooting
+
+After flashing the BIN image, the SW should run correctly, but if the SW keeps doing reset loops forever, this means that the SW is running in some exception. In this Case we should bring the SW to factory image. TODO that: connect IO44(RXD0) to Ground for 10 Seconds and the SW will start from factory image. alternatively set `factory_reset_request` to 1 from the sdcard File  `Config/factory_reset.json`.
+
+Please check what is wrong in your new Image by doing debugging!!!, that helps you to identify and fix errors or bugs in your new code.
 
 ### Debugging
 

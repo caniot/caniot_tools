@@ -1,5 +1,6 @@
 # UDS OTA Firmware Upgrade via MQTT example
 
+![MQTT_UPDATE](https://github.com/caniot/caniot_tools/assets/91652497/22651323-0d7a-4109-bbe8-ff1e837fd88d)
 
 > **Note**
 > S32K1xx NXP EVB is required in this example. Please refer to [S32K116-Q048 Evaluation Board for Automotive General Purpose](https://www.nxp.com/design/development-boards/automotive-development-platforms/s32k-mcu-platforms/s32k116-q048-evaluation-board-for-automotive-general-purpose:S32K116EVB).
@@ -48,6 +49,11 @@ https://github.com/caniot/caniot_tools/assets/91652497/9fbb6125-5705-40ad-a361-f
 
 2. set MQTT_VARIANT_PUBLISCHER  to "0" in [CMakeLists.txt](./CMakeLists.txt) to build the subscriber Variant for CaniotBox 2, build again and flash it to  CaniotBox 2 .
 
+### Troubleshooting
+
+After flashing the BIN image, the SW should run correctly, but if the SW keeps doing reset loops forever, this means that the SW is running in some exception. In this Case we should bring the SW to factory image. TODO that: connect IO44(RXD0) to Ground for 10 Seconds and the SW will start from factory image. alternatively set `factory_reset_request` to 1 from the sdcard File  `Config/factory_reset.json`.
+
+Please check what is wrong in your new Image by doing debugging!!!, that helps you to identify and fix errors or bugs in your new code.
 
 ### Debugging
 

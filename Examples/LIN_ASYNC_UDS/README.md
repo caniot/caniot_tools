@@ -36,6 +36,12 @@ Follow this Video to Build the project using idf.py build and flash it to the bo
 
 https://github.com/caniot/caniot_tools/assets/91652497/9fbb6125-5705-40ad-a361-f04848f71ef4
 
+### Troubleshooting
+
+After flashing the BIN image, the SW should run correctly, but if the SW keeps doing reset loops forever, this means that the SW is running in some exception. In this Case we should bring the SW to factory image. TODO that: connect IO44(RXD0) to Ground for 10 Seconds and the SW will start from factory image. alternatively set `factory_reset_request` to 1 from the sdcard File  `Config/factory_reset.json`.
+
+Please check what is wrong in your new Image by doing debugging!!!, that helps you to identify and fix errors or bugs in your new code.
+
 
 ### Debugging
 
