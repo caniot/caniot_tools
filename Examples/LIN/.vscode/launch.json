@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "HW S31 Debug",
+      "type": "cppdbg",
+      "request": "launch",
+      "MIMode": "gdb",
+      "miDebuggerPath": "${env:IDF_TOOLS_PATH}\\tools\\xtensa-esp32s3-elf\\esp-2021r2-patch5-8.4.0\\xtensa-esp32s3-elf\\bin\\xtensa-esp32s3-elf-gdb.exe",
+      "program": "${workspaceFolder}/build_s31/${workspaceFolderBasename}.elf",
+      "cwd": "${workspaceFolder}/build_s31",
+      "setupCommands": [
+        { "text": "target remote 127.0.0.1:3333" },
+        { "text": "set remote hardware-watchpoint-limit 2"},
+        { "text": "mon reset halt" },
+        { "text": "flushregs" }
+      ],
+      "externalConsole": false,
+      "logging": {
+        "engineLogging": true
+      }
+    },
+    {
+      "name": "HW S3 Debug",
+      "type": "cppdbg",
+      "request": "launch",
+      "MIMode": "gdb",
+      "miDebuggerPath": "${env:IDF_TOOLS_PATH}\\tools\\xtensa-esp32s3-elf\\esp-2021r2-patch5-8.4.0\\xtensa-esp32s3-elf\\bin\\xtensa-esp32s3-elf-gdb.exe",
+      "program": "${workspaceFolder}/build_s3/${workspaceFolderBasename}.elf",
+      "cwd": "${workspaceFolder}/build_s3",
+      "setupCommands": [
+        { "text": "target remote 127.0.0.1:3333" },
+        { "text": "set remote hardware-watchpoint-limit 2"},
+        { "text": "mon reset halt" },
+        { "text": "flushregs" }
+      ],
+      "externalConsole": false,
+      "logging": {
+        "engineLogging": true
+      }
+    }
+  ]
+}

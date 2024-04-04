@@ -1,0 +1,7 @@
+#ifndef HIVEMQ_IF_H
+#define HIVEMQ_IF_H
+
+#define START_OTA_TOPIC   "START_OTA_TOPIC"
+#define OTA_DATA_TOPIC    "OTA_DATA_TOPIC"
+#define END_DATA_TOPIC    "END_DATA_TOPIC"
+#endif

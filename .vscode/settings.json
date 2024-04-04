@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.map": "c",
+        "main_if.h": "c",
+        "mqtt_hivemq_if.h": "c"
+    }
+}

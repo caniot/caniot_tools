@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "ESP-IDF",
+            "compilerPath": "",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "includePath": [
+                "${env:IDF_PATH}/**",
+                "${workspaceFolder}/**"
+            ],
+            "browse": {
+                "path": [
+                    "${env:IDF_PATH}/**",
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": false
+            }
+        }
+    ],
+    "version": 4
+}
