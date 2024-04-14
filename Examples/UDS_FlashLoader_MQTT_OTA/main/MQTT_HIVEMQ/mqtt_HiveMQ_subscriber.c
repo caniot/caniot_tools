@@ -27,7 +27,7 @@ static char *OTA_BUFFER = NULL;
 static uint32_t OTA_BUFFER_LEN = 0;
 static uint32_t OTA_BUFFER_LEN_COLLECTED = 0;
 
-#define CONFIG_BROKER_URL "mqtts://xxx.s2.eu.hivemq.cloud"
+#define CONFIG_BROKER_URL "mqtts://xxx.s2.eu.hivemq.cloud" // you need to add "mqtts://" to your hivemq default link
 #define CONFIG_BROKER_PORT 8883
 #define CONFIG_USER "addYouUSER"
 #define CONFIG_USER_PASSWRD "addYouPassword"

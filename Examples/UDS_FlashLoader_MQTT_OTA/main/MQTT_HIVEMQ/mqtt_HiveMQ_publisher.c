@@ -23,7 +23,7 @@ QueueHandle_t mqtt_hiveMQ_queue;
 extern const uint8_t server_cert_pem_start[] asm("_binary_ca_cert_mqtt_pem_start");
 extern const uint8_t server_cert_pem_end[] asm("_binary_ca_cert_mqtt_pem_end");
 
-#define CONFIG_BROKER_URL "mqtts://xxx.s2.eu.hivemq.cloud"
+#define CONFIG_BROKER_URL "mqtts://xxx.s2.eu.hivemq.cloud"  // you need to add "mqtts://" to your hivemq default link
 #define CONFIG_BROKER_PORT 8883
 #define CONFIG_USER "addYouUSER"
 #define CONFIG_USER_PASSWRD "addYouPassword"
