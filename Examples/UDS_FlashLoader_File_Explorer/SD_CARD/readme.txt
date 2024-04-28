@@ -1,1 +1,1 @@
-copy uds_ota_flashLoader folder to the CANIOTBOX micro SDCARD 
+copy uds_msc_flashLoader folder to the CANIOTBOX micro SDCARD 
