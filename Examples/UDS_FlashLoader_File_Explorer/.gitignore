@@ -1,0 +1,6 @@
+build_s1/
+build_s3/
+build_s31/
+build/
+sdkconfig.old
+sdkconfig

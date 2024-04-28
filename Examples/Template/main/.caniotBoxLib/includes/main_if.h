@@ -127,6 +127,19 @@ extern "C"
    ***************************************************************************/
   extern bool appl_read_file_sync(appl_message_t *appl_messagefile, char *fileName, const char *openType);
   /*************************************************************************
+   * @brief     write file from path defined by fileName to the SDcard,
+   *            Note : if file is already exist , the new Contents will append the old one when delete argument is false
+   * @name      appl_write_file_sync
+   * @param    fileName : string of file name
+   *           inputFileData : buffer contents file data
+   *           len: file length in bytes
+   *           delete: Delete it first if it exists, if false is given the new content will append the old file content
+   * @return   void
+   ***************************************************************************/
+  extern void appl_write_file_sync(const char *fileName, const char *inputFileData, size_t len,bool delete);
+
+ 
+  /*************************************************************************
    * @brief     get the connection  operating mode.
    * @name      nvsIf_get_connection_var
    * @param     void
