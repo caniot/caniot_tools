@@ -1,6 +1,6 @@
 # MSC (File Explorer) UDS FlashLoader example
 
-![msc](https://github.com/caniot/caniot_tools/assets/91652497/416755f6-3525-4bc7-8887-48868348ef50)
+![msc](https://github.com/caniot/caniot_tools/assets/91652497/0751d9a6-40fe-443a-bfc6-6f42c649dbbd)
 
 
 > **Note**
