@@ -28,10 +28,12 @@ extern void LinIf_uart_deinit();
 *
 * @attention 1. This API should be called after caniotBox_init and after LinIf_uart_deinit
 * @param     - uart_config_t : UART configuration parameters (see uart_types.h)
-*
+*            - tx_buffer_size UART TX ring buffer size.
+*               If set to zero, driver will not use TX buffer, TX function will block task until all data have been sent out.
+*            - set to true if LIN bit time measurements are needed
 * @return    uart_port_t UART port number, can be UART_NUM_0 ~ (UART_NUM_MAX -1)
 *****************************************************************************/
-extern uart_port_t LinIf_uart_init(uart_config_t* uart_config);
+extern uart_port_t LinIf_uart_init(uart_config_t* uart_config,int tx_buffer_size, bool enable_bittime_measurement);
 /***************************************************************************
 * @name      LinIf_uart_deinit
 * @brief     Uninstall UART driver . 

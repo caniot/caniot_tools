@@ -21,9 +21,9 @@ Caniot tool is a Multi-platform simulation, analysis and test environment for de
 
 * **Step 1**. Run command `git clone --recursive https://github.com/caniot/caniot_tools.git` to download the source of this project.
 * **Step 2**. install Caniot Application for your OS [caniot app](./caniot_app).
-* **Step 3**. ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please follow this Video for Quick Start and refer to [ESP-IDF(release/v4.4.6) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html#installation-step-by-step) to download it. 
+* **Step 3**. ESP-IDF (Espressif IoT Development Framework) is required to build caniotBox application. If this is your first time using the ESP-IDF,Please follow this Video for Quick Start and refer to [ESP-IDF(release/v4.4.7) Installation Step by Step](https://docs.espressif.com/projects/esp-idf/en/v4.4.7/esp32/get-started/index.html#installation-step-by-step) to download it. 
 
-https://github.com/caniot/caniot_tools/assets/91652497/7316d7dd-b231-48c8-bc9a-04b1b8e1cc21
+https://github.com/caniot/caniot_tools/assets/91652497/2f6cad55-b033-4529-8a4f-9472c1907f05
 
 * **Step 4**. now you can build a UDS FlashLoader OTA example[build a UDS OTA example](./Examples/UDS_FlashLoader_OTA).
 
