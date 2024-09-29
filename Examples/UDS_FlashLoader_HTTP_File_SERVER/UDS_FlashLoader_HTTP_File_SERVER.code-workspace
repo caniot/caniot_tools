@@ -1,0 +1,195 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"terminal.integrated.defaultProfile.windows": "Command Prompt",
+		"terminal.integrated.profiles.windows": {
+			"Command Prompt": {
+				"path": [
+					"${env:windir}\\Sysnative\\cmd.exe",
+					"${env:windir}\\System32\\cmd.exe"
+				],
+				"args": [
+					"/k"
+				],
+				"icon": "terminal-cmd"
+			},
+		},
+		"actionButtons": {
+			"customVars": {
+				"idfPath": "%IDF_TOOLS_PATH%",
+				"port": "COM3", /* Can be used in command as `${port}`*/
+			},
+			"commands": [
+				{
+					"name": "build S1",
+					"color": "white",
+					"tooltip": "build app for CaniotBox HW15 variant",
+					"command": "${idfPath}/idf_cmd_init.bat && del sdkconfig && idf.py -B build_s1 -D SDKCONFIG_DEFAULTS=\"sdkconfig_s1\" -D \"IDF_TARGET=esp32\" build "
+				},
+				{
+					"name": "build S3",
+					"tooltip": "build app for CaniotBox HW30 variant",
+					"color": "white",
+					"command": "${idfPath}/idf_cmd_init.bat && del sdkconfig && idf.py -B build_s3 -D SDKCONFIG_DEFAULTS=\"sdkconfig_s3\" -D \"IDF_TARGET=esp32s3\" build "
+				},
+				{
+					"name": "build S31",
+					"tooltip": "build app for CaniotBox HW31 variant",
+					"color": "white",
+					"command": "${idfPath}/idf_cmd_init.bat && del sdkconfig && idf.py -B build_s31 -D SDKCONFIG_DEFAULTS=\"sdkconfig_s31\" -D \"IDF_TARGET=esp32s3\" build "
+				},
+				{
+					"name": "menuconfig S31",
+					"tooltip": "build app for CaniotBox HW31 variant",
+					"color": "white",
+					"command": "cmd.exe \"k && ${idfPath}/idf_cmd_init.bat && del sdkconfig && idf.py -B build_s31 -D SDKCONFIG_DEFAULTS=\"sdkconfig_s31\" -D \"IDF_TARGET=esp32s3\" menuconfig "
+				},
+				{
+					"name": "monitor S1",
+					"color": "white",
+					"tooltip": "monitor app for CaniotBox HW15 variant over serial port",
+					"command": "${idfPath}/idf_cmd_init.bat && idf.py -B build_s1 monitor -p ${port} "
+				},
+				{
+					"name": "monitor S3",
+					"tooltip": "monitor app for CaniotBox HW30 variant over serial port",
+					"color": "white",
+					"command": "${idfPath}/idf_cmd_init.bat && idf.py -B build_s3 monitor -p ${port}",
+				},
+				{
+					"name": "monitor S31",
+					"tooltip": "monitor app for CaniotBox HW31 variant over serial port",
+					"color": "white",
+					"command": "${idfPath}/idf_cmd_init.bat && idf.py -B build_s31 monitor -p ${port} "
+				},
+				{
+					"name": "start openocd",
+					"color": "white",
+					"tooltip": "open openocd first before debugging",
+					"command": "openocd  -c \"set ESP_RTOS none\" -f board/esp32s3-builtin.cfg  -c \"set ESP_FLASH_SIZE 0\"  -c \"init; halt; esp appimage_offset 0xA0000\"  "
+				},
+				{
+					"name": "start openocd freertos",
+					"color": "white",
+					"tooltip": "open openocd freertos if you can`t debugg the first one, NOTE you have to start the debugger several time until the debugger is started ",
+					"command": "openocd  -f board/esp32s3-builtin.cfg  -c \"set ESP_FLASH_SIZE 0\"  -c \"init; halt; esp appimage_offset 0xA0000\"  "
+				},
+			],
+			"defaultColor": "white",
+			"reloadButton": "↻",
+			"loadNpmCommands": false
+		},
+		"C_Cpp.intelliSenseEngine": "Tag Parser",
+		"files.associations": {
+			"*.map": "c",
+			"*.s": "c",
+			"*.hc": "c",
+			"*.hm": "c",
+			"*.hi": "c",
+			"cstring": "c",
+			"array": "c",
+			"string": "c",
+			"string_view": "c",
+			"thread": "c",
+			"byteswap.h": "c",
+			"regex": "c",
+			"stat.h": "c",
+			"uart.h": "c",
+			"type_traits": "c",
+			"main_if.h": "c",
+			"lin_if.h": "c",
+			"can_if.h": "c",
+			"atomic": "cpp",
+			"strstream": "cpp",
+			"*.tcc": "cpp",
+			"bitset": "cpp",
+			"cctype": "cpp",
+			"chrono": "cpp",
+			"cinttypes": "cpp",
+			"clocale": "cpp",
+			"cmath": "cpp",
+			"codecvt": "cpp",
+			"complex": "cpp",
+			"condition_variable": "cpp",
+			"csignal": "cpp",
+			"cstdarg": "cpp",
+			"cstddef": "cpp",
+			"cstdint": "cpp",
+			"cstdio": "cpp",
+			"cstdlib": "cpp",
+			"ctime": "cpp",
+			"cwchar": "cpp",
+			"cwctype": "cpp",
+			"deque": "cpp",
+			"list": "cpp",
+			"unordered_map": "cpp",
+			"unordered_set": "cpp",
+			"vector": "cpp",
+			"exception": "cpp",
+			"algorithm": "cpp",
+			"functional": "cpp",
+			"ratio": "cpp",
+			"system_error": "cpp",
+			"tuple": "cpp",
+			"fstream": "cpp",
+			"future": "cpp",
+			"initializer_list": "cpp",
+			"iomanip": "cpp",
+			"iosfwd": "cpp",
+			"iostream": "cpp",
+			"istream": "cpp",
+			"limits": "cpp",
+			"memory": "cpp",
+			"mutex": "cpp",
+			"new": "cpp",
+			"ostream": "cpp",
+			"numeric": "cpp",
+			"sstream": "cpp",
+			"stdexcept": "cpp",
+			"streambuf": "cpp",
+			"utility": "cpp",
+			"typeinfo": "cpp",
+			"hexloader.hpp": "c",
+			"freertos.h": "c",
+			"stdio.h": "c",
+			"*.ipp": "cpp",
+			"esp_heap_caps.h": "c",
+			"random": "cpp",
+			"esp_err.h": "c",
+			"xmemory0": "cpp",
+			"xstring": "c",
+			"xutility": "c",
+			"xlocale": "c",
+			"tinyusb.h": "c",
+			"unity.h": "c",
+			"test_common.h": "c",
+			"esp_log.h": "c",
+			"xlocmes": "c",
+			"xlocmon": "c",
+			"xlocnum": "c",
+			"xloctime": "c",
+			"xmemory": "c",
+			"map": "c",
+			"set": "cpp",
+			"xhash": "cpp",
+			"xtree": "cpp",
+			"sdkconfig.h": "c",
+			"string.h": "c",
+			"lvgl.h": "c",
+			"cjson.h": "c",
+			"lvgl_if.h": "c",
+			"common_types.h": "c",
+			"optional": "c",
+			"gpio.h": "c",
+			"queue.h": "c",
+			"tusb_config.h": "c",
+			"stream_buffer.h": "c",
+			"fat12.h": "c",
+			"uds_service_fnc.h": "c"
+		}
+	}
+}

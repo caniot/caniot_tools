@@ -1,0 +1,24 @@
+
+
+// BUILD for HW V1.5
+%IDF_TOOLS_PATH%/idf_cmd_init.bat && del sdkconfig && idf.py -B build_s1 -D SDKCONFIG_DEFAULTS=sdkconfig_s1 -D IDF_TARGET=esp32 build 
+// BUILD for HW V3.0
+%IDF_TOOLS_PATH%/idf_cmd_init.bat && del sdkconfig && idf.py -B build_s3 -D SDKCONFIG_DEFAULTS=sdkconfig_s3 -D IDF_TARGET=esp32s3 build
+// BUILD for HW V3.1
+%IDF_TOOLS_PATH%/idf_cmd_init.bat && del sdkconfig && idf.py -B build_s31 -D SDKCONFIG_DEFAULTS=sdkconfig_s31 -D IDF_TARGET=esp32s3 build
+
+// Serial Monitor for HW V1.5
+%IDF_TOOLS_PATH%/idf_cmd_init.bat && idf.py -B build_s1 monitor -p COMx
+// Serial Monitor for HW V3.0
+%IDF_TOOLS_PATH%/idf_cmd_init.bat && idf.py -B build_s3 monitor -p COMx
+// Serial Monitor for HW V3.1
+%IDF_TOOLS_PATH%/idf_cmd_init.bat && idf.py -B build_s31 monitor -p COMx
+
+
+
+// menuconfig for HW V1.5
+%IDF_TOOLS_PATH%/idf_cmd_init.bat && del sdkconfig && idf.py -B build_s1 -D SDKCONFIG_DEFAULTS=sdkconfig_s1 -D IDF_TARGET=esp32 menuconfig 
+// menuconfig for HW V3.0
+%IDF_TOOLS_PATH%/idf_cmd_init.bat && del sdkconfig && idf.py -B build_s3 -D SDKCONFIG_DEFAULTS=sdkconfig_s3 -D IDF_TARGET=esp32s3 menuconfig
+// menuconfig for HW V3.1
+%IDF_TOOLS_PATH%/idf_cmd_init.bat && del sdkconfig && idf.py -B build_s31 -D SDKCONFIG_DEFAULTS=sdkconfig_s31 -D IDF_TARGET=esp32s3 menuconfig
