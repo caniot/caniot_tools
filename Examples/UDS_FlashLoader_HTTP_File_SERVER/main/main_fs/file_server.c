@@ -61,7 +61,16 @@ static esp_err_t index_html_get_handler(httpd_req_t *req)
     httpd_resp_send(req, NULL, 0); // Response body can be empty
     return ESP_OK;
 }
-
+/* Handler to redirect incoming GET request for /index.html to /
+ * This can be overridden by uploading file with same name */
+static esp_err_t data_html_get_handler(httpd_req_t *req)
+{
+    // httpd_resp_set_status(req, "307 Temporary Redirect");
+    httpd_resp_set_type(req, "text/plain");
+    // httpd_resp_set_hdr(req, "Content-Type", "text/plain");
+    httpd_resp_sendstr(req, "01,01,01/01,01,01"); // Response body can be empty
+    return ESP_OK;
+}
 /* Handler to respond with an icon file embedded in flash.
  * Browsers expect to GET website icon at URI /favicon.ico.
  * This can be overridden by uploading file with same name */
@@ -254,6 +263,8 @@ static esp_err_t download_get_handler(httpd_req_t *req)
     appl_mountSdCard();
     const char *filename = get_path_from_uri(filepath, ((struct file_server_data *)req->user_ctx)->base_path,
                                              req->uri, sizeof(filepath));
+
+    serialOutput_sendString("download_get_handler %s %s", filename, filepath);
     if (!filename)
     {
         serialOutput_sendString("Filename is too long");
@@ -559,10 +570,149 @@ static esp_err_t flash_post_handler(httpd_req_t *req)
     UDS_Appl_filepath = filepath;
     return ESP_OK;
 }
+static esp_err_t index_get_handler(httpd_req_t *req)
+{
+    char *file_nametoServe = NULL;
 
+    // const char *filename = get_path_from_uri(filepath, ((struct file_server_data *)req->user_ctx)->base_path,
+    //                                          req->uri, sizeof(filepath));
+
+    const char *filename = req->uri;
+    serialOutput_sendString("filename %s ", filename);
+    if (strcmp(filename, "/data") == 0)
+    {
+        return data_html_get_handler(req); // End response
+    }
+    else if (strcmp(filename, "/index.html") == 0)
+    {
+        file_nametoServe = "/sdcard/web/index.html"; // return index_html_get_handler(req);
+    }
+    else if (strcmp(filename, "/favicon.png") == 0)
+    {
+        file_nametoServe = "/sdcard/web/favicon.png";
+    }
+    else if (strcmp(filename, "/flutter.js") == 0)
+    {
+        file_nametoServe = "/sdcard/web/flutter.js";
+    }
+    else if (strcmp(filename, "/manifest.json") == 0)
+    {
+        file_nametoServe = "/sdcard/web/manifest.json";
+    }
+    else if (strcmp(filename, "/icons/Icon-192.png") == 0)
+    {
+        file_nametoServe = "/sdcard/web/icons/Icon-192.png";
+    }
+    else if (strstr(filename, "/flutter_service_worker.js") != NULL)
+    {
+        file_nametoServe = "/sdcard/web/flutter_service_worker.js";
+    }
+    else if (strcmp(filename, "/main.dart.js") == 0)
+    {
+        file_nametoServe = "/sdcard/web/main.dart.js";
+    }
+    else if (strcmp(filename, "/assets/AssetManifest.bin.json") == 0)
+    {
+        file_nametoServe = "/sdcard/web/assets/AssetManifest.bin.json";
+    }
+    else if (strcmp(filename, "/assets/FontManifest.json") == 0)
+    {
+        file_nametoServe = "/sdcard/web/assets/FontManifest.json";
+    }
+    else if (strcmp(filename, "/assets/fonts/MaterialIcons-Regular.otf") == 0)
+    {
+        file_nametoServe = "/sdcard/web/assets/fonts/MaterialIcons-Regular.otf";
+    }
+    else if (strcmp(filename, "/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf") == 0)
+    {
+        file_nametoServe = "/sdcard/web/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf";
+    }
+    else if (strcmp(filename, "/assets/packages/wakelock_plus/assets/no_sleep.js") == 0)
+    {
+        file_nametoServe = "/sdcard/web/assets/packages/wakelock_plus/assets/no_sleep.js";
+    }
+    else if (strcmp(filename, "/assets/assets/icons/Car.svg") == 0)
+    {
+        file_nametoServe = "/sdcard/web/assets/assets/icons/Car.svg";
+    }
+    else if (strcmp(filename, "/assets/assets/icons/door_lock.svg") == 0)
+    {
+        file_nametoServe = "/sdcard/web/assets/assets/icons/door_lock.svg";
+    }
+    else
+    {
+        file_nametoServe = "/sdcard/web/index.html"; // return index_html_get_handler(req);
+    }
+
+    serialOutput_sendString("filename %s %s", filename, file_nametoServe);
+
+    FILE *f = fopen(file_nametoServe, "rb");
+    if (f == NULL)
+    {
+        httpd_resp_send_404(req);
+        return ESP_FAIL;
+    }
+    // Read file content and send as response
+    char *buffer = (char *)malloc(6000);
+    size_t bytes_read;
+    while ((bytes_read = fread(buffer, 1, 6000, f)) > 0)
+    {
+        httpd_resp_send_chunk(req, buffer, bytes_read);
+    }
+    fclose(f);
+    free(buffer);
+    httpd_resp_send_chunk(req, NULL, 0); // End response
+
+    serialOutput_sendString("Response sent successfully");
+    return ESP_OK;
+}
+
+static const httpd_uri_t index_main = {
+    .uri = "/*",
+    .method = HTTP_GET,
+    .handler = index_get_handler,
+    .user_ctx = NULL};
+
+/* Handler to delete a file from the server */
+static esp_err_t morse_post_handler(httpd_req_t *req)
+{
+    // Buffer to store the incoming data
+    char *content = malloc(4096);
+    int ret, remaining = req->content_len;
+
+    // Read the data from the request
+    while (remaining > 0)
+    {
+        // Read the data into the buffer
+        if ((ret = httpd_req_recv(req, content, MIN(remaining, 4096))) <= 0)
+        {
+            if (ret == HTTPD_SOCK_ERR_TIMEOUT)
+            {
+                continue; // Retry receiving if timeout occurred
+            }
+            return ESP_FAIL; // Return failure if other error occurred
+        }
+        remaining -= ret;
+    }
+
+    // Null-terminate the received data
+    content[req->content_len] = '\0';
+
+    // Log the received message
+    serialOutput_sendString("Received message: %s", content);
+
+    free(content);
+
+    // Send a response back to the client
+    const char resp[] = "Message received";
+    httpd_resp_set_type(req, "text/plain");
+    httpd_resp_sendstr(req, resp);
+    return ESP_OK;
+}
 /* Function to start the file server */
 esp_err_t example_start_file_server(const char *base_path)
 {
+    appl_mountSdCard();
     static struct file_server_data *server_data = NULL;
 
     if (server_data)
@@ -589,15 +739,15 @@ esp_err_t example_start_file_server(const char *base_path)
      * target URIs which match the wildcard scheme */
     config.uri_match_fn = httpd_uri_match_wildcard;
     config.core_id = 0;
-    config.max_open_sockets = 2;
-
+    config.max_open_sockets = 4;
+    // config.server_port = 8080;
     serialOutput_sendString("Starting HTTP Server on port: '%d'", config.server_port);
     if (httpd_start(&server, &config) != ESP_OK)
     {
         serialOutput_sendString("Failed to start file server!");
         return ESP_FAIL;
     }
-
+#if 0
     /* URI handler for getting uploaded files */
     httpd_uri_t file_download = {
         .uri = "/*", // Match all URIs of type /path/to/file
@@ -632,6 +782,14 @@ esp_err_t example_start_file_server(const char *base_path)
         .user_ctx = server_data // Pass server data as context
     };
     httpd_register_uri_handler(server, &file_flash);
-
+#else
+    static const httpd_uri_t index_mainMorse = {
+        .uri = "/morse",
+        .method = HTTP_POST,
+        .handler = morse_post_handler,
+        .user_ctx = NULL};
+    httpd_register_uri_handler(server, &index_mainMorse);
+    httpd_register_uri_handler(server, &index_main);
+#endif
     return ESP_OK;
 }
