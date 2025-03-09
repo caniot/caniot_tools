@@ -62,11 +62,11 @@ void app_main(void)
     serialOutput_sendString("unsupported variant %d", can_lin_variant);
   }
 
- // appl_mountSdCard();
+  appl_mountSdCard();
   esp_err_t esp_err = example_start_file_server("/sdcard");
   serialOutput_sendString("example_start_file_server %d", esp_err);
   if (esp_err != ESP_OK)
   {
-   // appl_unmountSdCard();
+    appl_unmountSdCard();
   }
 };
